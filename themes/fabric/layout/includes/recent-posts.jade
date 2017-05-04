@@ -1,0 +1,9 @@
+
+if site.posts.length > 0
+  .post
+    //- h1= __("recent_posts")
+    each post in site.posts.sort('date', -1).limit(10).toArray()
+      .post-item
+        a(href=config.root + post.path)= post.title
+        if post.date
+          time(datetime=post.date.toJSON())= date(post.date, date_format)

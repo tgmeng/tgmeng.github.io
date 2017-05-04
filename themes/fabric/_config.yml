@@ -1,0 +1,31 @@
+
+# html lang
+language: en
+
+# main menu navigation
+menu:
+  Home: /
+  # About: /about
+  # Contact: /contact
+  Archives: /archives
+
+# Miscelaneous
+favicon: /favicon.ico
+
+# stylesheets loaded in the <head>
+stylesheets:
+- /css/typo.css
+- /css/fabric.css
+
+# scripts loaded in the end of the body
+scripts:
+- /js/fabric.js
+- //cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js
+- //rawgit.com/google/code-prettify/master/src/lang-css.js
+
+node_sass:
+  debug: false
+  outputStyle: compressed
+  precision: 5
+  sourceComments: false
+  indentedSyntax: true

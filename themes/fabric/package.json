@@ -1,0 +1,7 @@
+{
+  "name": "fabric",
+  "version": "0.0.0",
+  "description": "fabric hexo theme",
+  "private": true,
+  "dependencies": {}
+}

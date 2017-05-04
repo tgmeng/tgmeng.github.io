@@ -1,0 +1,58 @@
+// reset code style
+.prettyprint
+  padding: 1em 1.5em !important
+  border: 1px solid #ddd !important
+  white-space: pre-wrap
+  word-break: break-all
+  li
+    list-style-type: decimal !important
+
+#g-cntr
+  width: 100%
+  max-width: 760px
+  margin: 0 auto
+  padding: 0 10px
+
+#g-hd
+  text-align: center
+
+.menu
+  &-item
+    display: inline
+  a
+    margin: 0 5px
+
+#g-bd
+  margin: 20px 0
+
+.post,.archive,.category,.tag
+  &-item
+    time
+      margin-left: 10px
+
+#pagination
+  margin-top: 10px
+  overflow: hidden
+  .prev
+    float: left
+  .next
+    float: right
+
+#g-ft
+  text-align: center
+  .ft-item
+    display: inline;
+    position: relative
+    padding: 0 10px
+    &:first-child:before
+      width: 0
+    &:before
+      $ft-border-height: 1em;
+      position: absolute
+      top: 50%
+      left: 0
+      width: 1px
+      height: $ft-border-height
+      margin-top: -$ft-border-height / 2
+      background-color: #ccc
+      content: ''
