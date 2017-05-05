@@ -47,8 +47,8 @@ this.setState({ some });
 ```
 则组件不会进行重新渲染
 
-由于直接修改some上的time属性的值，some任然指向同一个对象。
-进过PureRenderMixin的优化，不进行重新渲染，造成“卡死”的情况。
+由于直接修改some上的time的值，但some仍然指向同一个对象。
+经过PureRenderMixin的优化判断，不执行重新渲染，造成“卡死”的情况。
 
 针对上面这种情况：
 1. 使用forceUpdate()更新；
@@ -83,7 +83,7 @@ console.log(x.name); // 'old name'
 console.log(y.name); // 'new name'
 console.log(x === y); // false
 ```
-深拷贝效率特别低，所以强烈不推荐使用。
+深拷贝效率特别低，强烈不推荐。
 
 ### Object.assign拷贝
 按照修改路径，使用 [Object.assign] 拷贝对象，构造新对象。
@@ -118,7 +118,7 @@ console.log(x === y); // false
 }
 ```
 
-那我们可能要一遍遍浅拷贝对象进行复制：
+那我们可能要一遍遍拷贝对象：
 ```javascript
 const some = this.state.some;
 const neoSome = Object.assign({}, some, {
@@ -129,7 +129,7 @@ const neoSome = Object.assign({}, some, {
 this.setState({ some: neoSome });
 ```
 
-为了简化操作 或 加强相关功能，我们可以使用不可变相关的库方便我们编写代码。
+为了简化操作 或 加强相关功能，我们可以使用不可变相关的库。
 
 ### Immutable库
 Facebook出品的 [Immutable.js]，比较复杂、重，真.重型解药
