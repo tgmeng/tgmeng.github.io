@@ -1,16 +1,10 @@
 extends includes/layout
 
 block content
-  div#tag
+  include mixins
+  div.tag
     h1= 'Tag: ' + page.tag
-    - page.posts.each(function(article){
-        .tag-item
-          if article.link
-            a(href=url_for(article.link) target="_blank")
-              = article.title || 'No Title'
-            time(datetime=date_xml(article.date))= date(article.date)
-          else
-            a(href=url_for(article.path))= article.title || 'No Title'
-            time(datetime=date_xml(article.date))= date(article.date)
+    - page.posts.each(article => {
+        +listItem(article, 'tag')
     - })
   include includes/pagination

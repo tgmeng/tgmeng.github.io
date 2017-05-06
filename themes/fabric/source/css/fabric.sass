@@ -7,43 +7,66 @@
   li
     list-style-type: decimal !important
 
-#g-cntr
+.container
   width: 100%
   max-width: 760px
   margin: 0 auto
   padding: 0 10px
 
-#g-hd
+.header
   text-align: center
 
 .menu
-  &-item
+  &__item
     display: inline
   a
     margin: 0 5px
 
-#g-bd
-  margin: 20px 0
+.main
 
-.post,.archive,.category,.tag
-  &-item
-    time
-      margin-left: 10px
+.post,
+.archive,
+.category,
+.tag
+  &__item
 
-#pagination
+.pagination
+  position: relative
+  display: table
+  width: 100%
+  min-height: 1em
   margin-top: 10px
-  overflow: hidden
-  .prev
-    float: left
-  .next
-    float: right
+  table-layout: fixed
+  &__prev,
+  &__next
+    display: table-cell
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+  &__prev
+    text-align: left
+    padding-right: 1em
+  &__next
+    text-align: right
+    padding-left: 1em
+  .page-num
+    display: table-cell
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
 
-#g-ft
+.page-num
   text-align: center
-  .ft-item
-    display: inline;
+  &__current
+    color: #999
+  &__total
+
+.footer
+  text-align: center
+  .footer__item
     position: relative
-    padding: 0 10px
+    padding: 0 .5em
     &:first-child:before
       width: 0
     &:before

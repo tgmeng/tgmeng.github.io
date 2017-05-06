@@ -1,5 +1,9 @@
 extends includes/layout
 
 block content
-  include includes/recent-posts
+  include mixins
+  if page.posts.length > 0
+    .post
+      each post in page.posts.toArray()
+        +listItem(post, 'post')
   include includes/pagination

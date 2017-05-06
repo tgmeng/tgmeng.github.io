@@ -13,30 +13,27 @@ html(lang=config.language)
     meta(charset='UTF-8')
     title= pageTitle
     if theme.stylesheets !== undefined && theme.stylesheets.length > 0
-      //- stylesheets list from config.yml
       each url in theme.stylesheets
         link(rel='stylesheet', href=url)
     link(rel="icon", href=config.root + 'img/favicon.png')
   body
-    #g-cntr.typo
-        #g-hd
-          nav
-            ul.menu
-              each url, label in theme.menu
-                li.menu-item
-                  a(href=url)= __(label).toUpperCase()
-        #g-bd
-          #g-bd-inner
-            if body
-              div!= body
-            else
-              block content
-        #g-ft
-          #g-ft-inner
-            div.ft-item= '©2016  ' + config.author
-            div.ft-item
-                | Powered By 
-                a(href='http://hexo.io' target="_blank") Hexo
+    .container.typo
+      header.header
+        nav
+          ul.menu
+            each url, label in theme.menu
+              li.menu__item
+                a(href=url)= __(label).toUpperCase()
+
+      section.main
+        if body
+          div!= body
+        else
+          block content
+
+      footer.footer
+        span.footer__item= '©2017 ' + config.author
+        span.footer__item Powered By #[a(href='http://hexo.io' target="_blank")] Hexo
 
     if theme.scripts != undefined && theme.scripts.length > 0
       //- scripts list from config.yml

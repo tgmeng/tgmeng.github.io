@@ -1,0 +1,8 @@
+
+nav.pagination
+  if page.prev && page.prev.path
+    span.pagination__prev
+      a(href=url_for(page.prev.path))!= page.prev.title
+  if page.next && page.next.path
+    span.pagination__next
+      a(href=url_for(page.next.path))!= page.next.title
