@@ -24,7 +24,7 @@ tags:
 - 自定义……
 
 ### 命名规范
-*<block>*、*<element>* 和 *<modifier>*，由拉丁字母、数字组成，使用小驼峰式命名法（lowerCamelCase）。
+*`<block>`*、*`<element>`* 和 *`<modifier>`*，由拉丁字母、数字组成，使用小驼峰式命名法（lowerCamelCase）。
 
 “\-”（dash）不表示连字符，用于以下分隔：
 
