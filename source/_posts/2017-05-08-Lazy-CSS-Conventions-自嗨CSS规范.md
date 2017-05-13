@@ -52,6 +52,21 @@ tags:
 .namespace-blockName-elementName--modifierName {}
 ```
 
+### 依赖、组合
+啥依赖、组合？下面会用到。
+
+**依赖**：
+
+- 后代选取器，`.a .b {}`
+- 子元素选择器，`.a>.b {}`
+
+**组合**：
+
+- 交集选择器，`.a.b {}`
+- 相邻兄弟选择器，`.a+.b {}`
+- 普通兄弟选择器，`.a~.b {}`
+
+
 ## Block
 有意义的独立实体。  
 Block间可以组合、嵌套、交互，但是语义上是相同的，没有优先级和层级。
@@ -65,7 +80,8 @@ Block间可以组合、嵌套、交互，但是语义上是相同的，没有优
 
 - 仅使用类名选择器
 - 没有标签名或ID
-- 不依赖，但可组合其他 Blocks、Elements
+- 不可依赖，但可组合其他 Blocks
+- 不可依赖、组合其他 Elements
 
 ```css
 /* ✔️ */
@@ -74,8 +90,10 @@ Block间可以组合、嵌套、交互，但是语义上是相同的，没有优
 .blockName.z-active {}
 
 /* ❌ */
-.blockName .anotherBlockName {}
-.z-active .blockName {}
+.blockOne .blockTwo {}
+.z-active .blockName {}、
+.blockName.blockName-elementName {}
+.blockOne-elementName .blockTwo {}
 ```
 
 ## Element
@@ -93,17 +111,21 @@ Element也可以和Block组合，常用于状态类（.z-）。
 
 - 仅使用类名选择器
 - 没有标签名或ID
-- 不依赖，但可组合其他 Blocks、Elements
+- 可依赖、组合其他 Blocks
+- 不可依赖、组合其他 Elements
 
 ```css
 /* ✔️ */
 .blockName-elementName {}
 /* 与 .z-acitve（block）组合使用 */
 .blockName-elementName.z-active {}
+/* 依赖 .blockName.z-full */
+.blockName.z-full .blockName-elementName {}
 
 /* ❌ */
 div.blockName-elementName {}
-.blockName .blockName-elementName {}
+.blockName-elementOne .blockName-elementTwo {}
+.blockName-elementOne.blockName-elementTwo {}
 ```
 
 ## Modifier
@@ -174,7 +196,8 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 ```
 
 ### 状态（z）
-为状态类样式加入前缀，统一标识，方便识别，组合使用。
+为状态类样式加入前缀，统一标识，方便识别。  
+**必须组合使用**。
 
 ```css
 .m-nav-item.z-active {}
