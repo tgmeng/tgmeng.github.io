@@ -1,11 +1,11 @@
 ---
-title: Lazy CSS Conventions - 自嗨CSS规范
+title: WTF CSS Conventions - 自嗨CSS规范
 date: 2017-05-08 16:36:20
 tags:
 ---
 
 ## 前言
-为了学习BEM、NEC等…规范，同时结合自己的口味，自己嗨了这份CSS规范，用于个人项目。  
+为了学习BEM、NEC等…规范，同时结合自己的口味，自己嗨（抄袭）了这份CSS规范，用于个人项目。  
 在使用中不断改进ing...
 
 ## 基础
@@ -15,13 +15,17 @@ tags:
 
 *`<namespace>`*：
 
-- 布局（l）
-- 模块（m）
-- 原件（u）
-- 功能（f）
-- 状态（z）
-- Javascript获取节点（j）
-- 自定义……
+1. 普通命名空间：严格遵守下面BEM规则约束
+	- 布局（l）
+	- 模块（m）
+	- 原件（u）
+	- 功能（f）
+	- Javascript获取节点（j）
+	- 自定义……
+
+2. 特殊命名空间：有特殊属性，可定义额外规则
+	- 状态（z）
+	- 自定义……
 
 ### 命名规范
 *`<block>`*、*`<element>`* 和 *`<modifier>`*，由拉丁字母、数字组成，使用小驼峰式命名法（lowerCamelCase）。
@@ -69,7 +73,7 @@ tags:
 
 ## Block
 有意义的独立实体。  
-Block间可以组合、嵌套、交互，但是语义上是相同的，没有优先级和层级。
+Block间可以嵌套、交互，但是语义上是相同的，没有优先级和层级。
 
 ### HTML：
 ```html
@@ -80,25 +84,22 @@ Block间可以组合、嵌套、交互，但是语义上是相同的，没有优
 
 - 仅使用类名选择器
 - 没有标签名或ID
-- 不可依赖，但可组合其他 Blocks
+- 不可依赖，组合其他 Blocks
 - 不可依赖、组合其他 Elements
 
 ```css
 /* ✔️ */
 .blockName {}
 .anotherBlockName {}
-.blockName.z-active {}
 
 /* ❌ */
 .blockOne .blockTwo {}
-.z-active .blockName {}、
 .blockName.blockName-elementName {}
 .blockOne-elementName .blockTwo {}
 ```
 
 ## Element
-Block的一部分，独立无意义。  
-Element也可以和Block组合，常用于状态类（.z-）。
+Block的一部分，独立无意义。
 
 ### HTML：
 ```html
@@ -111,21 +112,19 @@ Element也可以和Block组合，常用于状态类（.z-）。
 
 - 仅使用类名选择器
 - 没有标签名或ID
-- 可依赖、组合其他 Blocks
+- 不可依赖，组合其他 Blocks
 - 不可依赖、组合其他 Elements
 
 ```css
 /* ✔️ */
 .blockName-elementName {}
-/* 与 .z-acitve（block）组合使用 */
-.blockName-elementName.z-active {}
-/* 依赖 .blockName.z-full */
-.blockName.z-full .blockName-elementName {}
 
 /* ❌ */
 div.blockName-elementName {}
 .blockName-elementOne .blockName-elementTwo {}
 .blockName-elementOne.blockName-elementTwo {}
+/* 依赖 .blockName */
+.blockName .blockName-elementName {}
 ```
 
 ## Modifier
@@ -146,15 +145,23 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 /* 使用modifier的名字作为选择器 */
 .blockName--modifierName {}
 
-/* 修改基于 block-level modifier 的元素 */
+/* 使用多个modifier */
+.blockName--modifier1.blockName--modifier2 {}
+
+/* 修改基于 block-level modifier 的 element */
 .blockName--modifierName .blockName-elementName {}
+/* 修改基于多个 block-level modifier 的 element */
+.blockName--modifier1.blockName--modifier2 .blockName-elementName {}
 
 /* Element modifier */
 .blockName-elementName--modifierName {}
 ```
 
 ## Namespace 
-### 布局（l）
+### 普通命名空间
+严格遵守上面BEM规则定义。
+
+#### 布局（l）
 将页面分割为几个大块，通常有头部、主体、主栏、侧栏、尾部等……
 
 ```css
@@ -163,7 +170,7 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 .l-body {}
 ```
 
-### 模块（m）
+#### 模块（m）
 通常是一个语义化、可重复使用的较大整体。
 
 ```css
@@ -174,7 +181,7 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 .m-list-item {}
 ```
 
-### 原件（u）
+#### 原件（u）
 通常是一个不可再分的较为小巧的个体，通常被重复用于各种模块中。
 
 ```css
@@ -184,8 +191,7 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 .u-icon {}
 .u-icon--close {}
 ```
-
-### 功能（f）
+#### 功能（f）
 为方便一些常用样式的使用，将这些使用率较高的样式剥离出来，按需使用。  
 通常这些选择器具有固定样式表现，比如清除浮动等！不可滥用！
 
@@ -195,17 +201,7 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 .f-fr { float: right; }
 ```
 
-### 状态（z）
-为状态类样式加入前缀，统一标识，方便识别。  
-**必须组合使用**。
-
-```css
-.m-nav-item.z-active {}
-
-.u-button.z-disable {}
-```
-
-### Javascript获取节点（j）
+#### Javascript获取节点（j）
 专用于JS获取节点，请勿使用.j-定义样式。
 
 ```html
@@ -220,9 +216,26 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 </script>
 ```
 
+### 特殊命名空间
+有特殊属性，可定义额外规则。
+
+#### 状态（z）
+为状态类样式加入前缀，统一标识，方便识别。  
+**被修饰的BE转变为modifier**！  
+**必须组合使用**！！
+
+```css
+/* ✔️ 这里转变为 block-level modifier  */
+.m-audio.z-playing .m-audio-icon {}
+.m-audio--reverse.z-playing .m-audio-icon {}
+.u-button.z-disable {}
+```
+
 ### 自定义
 如果以上不能满足你的需求，可以另外定义一个或多个大类。  
-**命名规则**：单个字母+"-"，即 .x- 的格式。
+根据自己的需求。  
+**命名规则**：单个字母+"-"，即 .x- 的格式。  
+当然可以按自己需求，选择该命名空间为普通或者特殊。
 
 ## 参考
 以上规则参考、修改自如下规范：
