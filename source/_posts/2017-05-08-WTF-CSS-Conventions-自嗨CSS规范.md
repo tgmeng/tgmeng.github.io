@@ -67,8 +67,6 @@ tags:
 **组合**：
 
 - 交集选择器，`.a.b {}`
-- 相邻兄弟选择器，`.a+.b {}`
-- 普通兄弟选择器，`.a~.b {}`
 
 
 ## Block
@@ -133,10 +131,10 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 
 ### HTML：
 ```html
-<!-- ✔️：与原类组合使用 -->
+<!-- ✔️ 与原类组合使用 -->
 <div class="blockName blockName--modifierName"></div>
 
-<!-- ❌：独立使用 -->
+<!-- ❌ 独立使用 -->
 <div class="blockName--modifierName"></div>
 ```
 
@@ -221,14 +219,26 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 
 #### 状态（z）
 为状态类样式加入前缀，统一标识，方便识别。  
-**被修饰的BE转变为modifier**！  
-**必须组合使用**！！
+**被修饰的BE转变为 伪.modifier（HTML规则类似，但CSS规则有区别）**！  
+**必须在HTML和CSS中组合使用**！！
+
+```html
+/* ✔️ */
+<div class="m-audio z-playing"></div>
+<div class="m-audio m-audio--reverse z-playing"></div>
+
+<!-- ❌ -->
+<div class="z-playing"></div>
+```
 
 ```css
-/* ✔️ 这里转变为 block-level modifier  */
+/* ✔️ */
 .m-audio.z-playing .m-audio-icon {}
 .m-audio--reverse.z-playing .m-audio-icon {}
 .u-button.z-disable {}
+
+/* ❌ */
+.z-playing .m-audio-icon {}
 ```
 
 ### 自定义
