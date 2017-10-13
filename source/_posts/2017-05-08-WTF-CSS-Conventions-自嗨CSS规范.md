@@ -24,7 +24,7 @@ tags:
 	- 自定义……
 
 2. 特殊命名空间：有特殊属性，可定义额外规则
-	- 状态（z）
+	- 状态（is）
 	- 自定义……
 
 ### 命名规范
@@ -217,28 +217,28 @@ Block和Element的修饰符，用于改变他们的外观、表现。
 ### 特殊命名空间
 有特殊属性，可定义额外规则。
 
-#### 状态（z）
+#### 状态（is）
 为状态类样式加入前缀，统一标识，方便识别。  
 **被修饰的BE转变为 伪.modifier（HTML规则类似，但CSS规则有区别）**！  
 **必须在HTML和CSS中组合使用**！！
 
 ```html
 /* ✔️ */
-<div class="m-audio z-playing"></div>
-<div class="m-audio m-audio--reverse z-playing"></div>
+<div class="m-audio is-playing"></div>
+<div class="m-audio m-audio--reverse is-playing"></div>
 
 <!-- ❌ -->
-<div class="z-playing"></div>
+<div class="is-playing"></div>
 ```
 
 ```css
 /* ✔️ */
-.m-audio.z-playing .m-audio-icon {}
-.m-audio--reverse.z-playing .m-audio-icon {}
-.u-button.z-disable {}
+.m-audio.is-playing .m-audio-icon {}
+.m-audio--reverse.is-playing .m-audio-icon {}
+.u-button.is-disable {}
 
 /* ❌ */
-.z-playing .m-audio-icon {}
+.is-playing .m-audio-icon {}
 ```
 
 ### 自定义
