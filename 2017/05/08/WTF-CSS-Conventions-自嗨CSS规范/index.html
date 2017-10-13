@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><title>WTF CSS Conventions - 自嗨CSS规范 [ 懒构造 ]</title><link rel="stylesheet" href="/css/typo.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container typo"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/">HOME</a></li><li class="menu__item"><a href="/archives">ARCHIVES</a></li></ul></nav></header><section class="main"><article class="post"><h1>WTF CSS Conventions - 自嗨CSS规范</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>为了学习BEM、NEC等…规范，同时结合自己的口味，自己嗨（抄袭）了这份CSS规范，用于个人项目。<br>在使用中不断改进ing…</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>.[&lt;namespace&gt;-]&lt;block&gt;[-&lt;element&gt;][--&lt;modifier&gt;]
+</code></pre><p><em><code>&lt;namespace&gt;</code></em>：</p>
+<ol>
+<li><p>普通命名空间：严格遵守下面BEM规则约束</p>
+<ul>
+<li>布局（l）</li>
+<li>模块（m）</li>
+<li>原件（u）</li>
+<li>功能（f）</li>
+<li>Javascript获取节点（j）</li>
+<li>自定义……</li>
+</ul>
+</li>
+<li><p>特殊命名空间：有特殊属性，可定义额外规则</p>
+<ul>
+<li>状态（is）</li>
+<li>自定义……</li>
+</ul>
+</li>
+</ol>
+<h3 id="命名规范"><a href="#命名规范" class="headerlink" title="命名规范"></a>命名规范</h3><p><em><code>&lt;block&gt;</code></em>、<em><code>&lt;element&gt;</code></em> 和 <em><code>&lt;modifier&gt;</code></em>，由拉丁字母、数字组成，使用小驼峰式命名法（lowerCamelCase）。</p>
+<p>“-”（dash）不表示连字符，用于以下分隔：</p>
+<ol>
+<li><em><code>&lt;namespace&gt;</code></em>、 <em><code>&lt;block&gt;</code></em> 和 <em><code>&lt;element&gt;</code></em> 之间使用 “-”（dash）分隔；  </li>
+<li><em><code>&lt;block&gt;</code></em>/<em><code>&lt;element&gt;</code></em> 和 <em><code>&lt;modifier&gt;</code></em> 之间使用 “--”（double dashes）分隔。</li>
+</ol>
+<pre><code class="css">/* block &amp; element */
+.blockName-elementName {}
+
+/* block/element &amp; modifier */
+.blockName--modifierName {}
+.blockName-elementName--modifierName {}
+</code></pre>
+<h3 id="常用结构"><a href="#常用结构" class="headerlink" title="常用结构"></a>常用结构</h3><pre><code class="css">/* block */
+.namespace-blockName {}
+/* block-level modifier */
+.namespace-blockName--modifierName {}
+/* element */
+.namespace-blockName-elementName {}
+/* element-level modifier */
+.namespace-blockName-elementName--modifierName {}
+</code></pre>
+<h3 id="依赖、组合"><a href="#依赖、组合" class="headerlink" title="依赖、组合"></a>依赖、组合</h3><p>啥依赖、组合？下面会用到。</p>
+<p><strong>依赖</strong>：</p>
+<ul>
+<li>后代选取器，<code>.a .b {}</code></li>
+<li>子元素选择器，<code>.a&gt;.b {}</code></li>
+</ul>
+<p><strong>组合</strong>：</p>
+<ul>
+<li>交集选择器，<code>.a.b {}</code></li>
+</ul>
+<h2 id="Block"><a href="#Block" class="headerlink" title="Block"></a>Block</h2><p>有意义的独立实体。<br>Block间可以嵌套、交互，但是语义上是相同的，没有优先级和层级。</p>
+<h3 id="HTML："><a href="#HTML：" class="headerlink" title="HTML："></a>HTML：</h3><pre><code class="html">&lt;div class=&quot;blockName&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="CSS："><a href="#CSS：" class="headerlink" title="CSS："></a>CSS：</h3><ul>
+<li>仅使用类名选择器</li>
+<li>没有标签名或ID</li>
+<li>不可依赖，组合其他 Blocks</li>
+<li>不可依赖、组合其他 Elements</li>
+</ul>
+<pre><code class="css">/* ✔️ */
+.blockName {}
+.anotherBlockName {}
+
+/* ❌ */
+.blockOne .blockTwo {}
+.blockName.blockName-elementName {}
+.blockOne-elementName .blockTwo {}
+</code></pre>
+<h2 id="Element"><a href="#Element" class="headerlink" title="Element"></a>Element</h2><p>Block的一部分，独立无意义。</p>
+<h3 id="HTML：-1"><a href="#HTML：-1" class="headerlink" title="HTML："></a>HTML：</h3><pre><code class="html">&lt;div class=&quot;blockName&quot;&gt;
+    &lt;div class=&quot;blockName-elementName&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="CSS：-1"><a href="#CSS：-1" class="headerlink" title="CSS："></a>CSS：</h3><ul>
+<li>仅使用类名选择器</li>
+<li>没有标签名或ID</li>
+<li>不可依赖，组合其他 Blocks</li>
+<li>不可依赖、组合其他 Elements</li>
+</ul>
+<pre><code class="css">/* ✔️ */
+.blockName-elementName {}
+
+/* ❌ */
+div.blockName-elementName {}
+.blockName-elementOne .blockName-elementTwo {}
+.blockName-elementOne.blockName-elementTwo {}
+/* 依赖 .blockName */
+.blockName .blockName-elementName {}
+</code></pre>
+<h2 id="Modifier"><a href="#Modifier" class="headerlink" title="Modifier"></a>Modifier</h2><p>Block和Element的修饰符，用于改变他们的外观、表现。<br><strong>需要与原类组合使用</strong>！</p>
+<h3 id="HTML：-2"><a href="#HTML：-2" class="headerlink" title="HTML："></a>HTML：</h3><pre><code class="html">&lt;!-- ✔️ 与原类组合使用 --&gt;
+&lt;div class=&quot;blockName blockName--modifierName&quot;&gt;&lt;/div&gt;
+
+&lt;!-- ❌ 独立使用 --&gt;
+&lt;div class=&quot;blockName--modifierName&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="CSS：-2"><a href="#CSS：-2" class="headerlink" title="CSS："></a>CSS：</h3><pre><code class="css">/* 使用modifier的名字作为选择器 */
+.blockName--modifierName {}
+
+/* 使用多个modifier */
+.blockName--modifier1.blockName--modifier2 {}
+
+/* 修改基于 block-level modifier 的 element */
+.blockName--modifierName .blockName-elementName {}
+/* 修改基于多个 block-level modifier 的 element */
+.blockName--modifier1.blockName--modifier2 .blockName-elementName {}
+
+/* Element modifier */
+.blockName-elementName--modifierName {}
+</code></pre>
+<h2 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h2><h3 id="普通命名空间"><a href="#普通命名空间" class="headerlink" title="普通命名空间"></a>普通命名空间</h3><p>严格遵守上面BEM规则定义。</p>
+<h4 id="布局（l）"><a href="#布局（l）" class="headerlink" title="布局（l）"></a>布局（l）</h4><p>将页面分割为几个大块，通常有头部、主体、主栏、侧栏、尾部等……</p>
+<pre><code class="css">.l-header {}
+.l-footer {}
+.l-body {}
+</code></pre>
+<h4 id="模块（m）"><a href="#模块（m）" class="headerlink" title="模块（m）"></a>模块（m）</h4><p>通常是一个语义化、可重复使用的较大整体。</p>
+<pre><code class="css">.m-nav {}
+.m-nav-item {}
+
+.m-list {}
+.m-list-item {}
+</code></pre>
+<h4 id="原件（u）"><a href="#原件（u）" class="headerlink" title="原件（u）"></a>原件（u）</h4><p>通常是一个不可再分的较为小巧的个体，通常被重复用于各种模块中。</p>
+<pre><code class="css">.u-button {}
+.u-button--primary {}
+
+.u-icon {}
+.u-icon--close {}
+</code></pre>
+<h4 id="功能（f）"><a href="#功能（f）" class="headerlink" title="功能（f）"></a>功能（f）</h4><p>为方便一些常用样式的使用，将这些使用率较高的样式剥离出来，按需使用。<br>通常这些选择器具有固定样式表现，比如清除浮动等！不可滥用！</p>
+<pre><code class="css">.f-db { display: block; }
+.f-fl { float: left; }
+.f-fr { float: right; }
+</code></pre>
+<h4 id="Javascript获取节点（j）"><a href="#Javascript获取节点（j）" class="headerlink" title="Javascript获取节点（j）"></a>Javascript获取节点（j）</h4><p>专用于JS获取节点，请勿使用.j-定义样式。</p>
+<pre><code class="html">&lt;ul&gt;
+    &lt;li class=&quot;j-node&quot;&gt;&lt;/li&gt;
+    &lt;li class=&quot;j-node&quot;&gt;&lt;/li&gt;
+    &lt;li class=&quot;j-node&quot;&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+    var node = docment.querySelectorAll(&#39;.j-node&#39;)
+&lt;/script&gt;
+</code></pre>
+<h3 id="特殊命名空间"><a href="#特殊命名空间" class="headerlink" title="特殊命名空间"></a>特殊命名空间</h3><p>有特殊属性，可定义额外规则。</p>
+<h4 id="状态（is）"><a href="#状态（is）" class="headerlink" title="状态（is）"></a>状态（is）</h4><p>为状态类样式加入前缀，统一标识，方便识别。<br><strong>被修饰的BE转变为 伪.modifier（HTML规则类似，但CSS规则有区别）</strong>！<br><strong>必须在HTML和CSS中组合使用</strong>！！</p>
+<pre><code class="html">/* ✔️ */
+&lt;div class=&quot;m-audio is-playing&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;m-audio m-audio--reverse is-playing&quot;&gt;&lt;/div&gt;
+
+&lt;!-- ❌ --&gt;
+&lt;div class=&quot;is-playing&quot;&gt;&lt;/div&gt;
+</code></pre>
+<pre><code class="css">/* ✔️ */
+.m-audio.is-playing .m-audio-icon {}
+.m-audio--reverse.is-playing .m-audio-icon {}
+.u-button.is-disable {}
+
+/* ❌ */
+.is-playing .m-audio-icon {}
+</code></pre>
+<h3 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h3><p>如果以上不能满足你的需求，可以另外定义一个或多个大类。<br>根据自己的需求。<br><strong>命名规则</strong>：单个字母+”-“，即 .x- 的格式。<br>当然可以按自己需求，选择该命名空间为普通或者特殊。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>以上规则参考、修改自如下规范：</p>
+<ul>
+<li><a href="http://nec.netease.com/standard/css-sort.html" target="_blank" rel="external">分类方法 - CSS规范 - 规范 - NEC : 更好的CSS样式解决方案</a></li>
+<li><a href="https://github.com/suitcss/suit/blob/master/doc/naming-conventions.md" target="_blank" rel="external">SUIT CSS naming conventions</a></li>
+<li><a href="http://getbem.com/naming/" target="_blank" rel="external">BEM — Block Element Modifier</a></li>
+</ul></article><nav class="pagination"><span class="pagination__next"><a href="/2017/05/04/Immutable小记/">Immutable小记</a></span></nav></section><footer class="footer"><span class="footer__item">©2017 tgmeng</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="/js/fabric.js"></script><script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script><script src="//rawgit.com/google/code-prettify/master/src/lang-css.js"></script></body></html>
