@@ -5,3 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // classList.add('linenums');
     });
 });
+
+window.addEventListener('load', function() {
+    if (PR) {
+        PR.prettyPrint();
+    }
+});
