@@ -16,12 +16,14 @@ favicon: /favicon.ico
 stylesheets:
 - /css/typo.css
 - /css/fabric.css
+- /css/prettify.css
+- /css/prettify/sunburst.css
 
 # scripts loaded in the end of the body
 scripts:
+- /js/prettify/prettify.js
+- /js/prettify/lang-css.js
 - /js/fabric.js
-- //cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js
-- //rawgit.com/google/code-prettify/master/src/lang-css.js
 
 node_sass:
   debug: false
