@@ -1,7 +1,11 @@
 
 mixin listItem(article, type)
-  div(class=(type || 'list') + '__item')
-    time(datetime=date_xml(article.date))= date(article.date) + ' '
+  - var clazz = 'post-list-item'
+  - var clazzs = [ clazz ];
+  - if (type) { clazzs.push(`${clazz}--${type}`) }
+
+  div(class=clazzs)
+    time(class=`${clazz}__time` datetime=date_xml(article.date))=date(article.date) + ' '
     
     if article.link
       a(href=url_for(article.link) target="_blank")= article.title || __('No Title')

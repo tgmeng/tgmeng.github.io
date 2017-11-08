@@ -4,6 +4,7 @@
   border: 1px solid #ddd !important
   white-space: pre-wrap
   word-break: break-all
+  box-sizing: border-box;
   li
     list-style-type: decimal !important
 
@@ -11,7 +12,6 @@
   width: 100%
   max-width: 760px
   margin: 0 auto
-  padding: 0 10px
 
 .header
   text-align: center
@@ -23,12 +23,7 @@
     margin: 0 5px
 
 .main
-
-.post,
-.archive,
-.category,
-.tag
-  &__item
+  padding: 0 1em
 
 .pagination
   position: relative
@@ -79,3 +74,14 @@
       margin-top: -$ft-border-height / 2
       background-color: #ccc
       content: ''
+
+.post-list-item
+  &__time
+    display: inline-block
+    width: 100px
+
+.post
+  &__time
+    font-size: .5em
+    color: #999;
+

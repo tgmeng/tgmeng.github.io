@@ -2,7 +2,7 @@ extends includes/layout
 
 block content
   include mixins
-  .category
+  div.category
     h1= page.category
     - page.posts.each(article => {
         +listItem(article, 'category')
