@@ -8,6 +8,7 @@ menu:
   # About: /about
   # Contact: /contact
   Archives: /archives
+  Albums: /albums
 
 # Miscelaneous
 favicon: /favicon.ico
@@ -24,6 +25,9 @@ scripts:
 - /js/prettify/prettify.js
 - /js/prettify/lang-css.js
 - /js/fabric.js
+
+my_qiniu_image_base: http://oxpdn0tpt.bkt.clouddn.com
+my_qiniu_image_style: imageView2/0/interlace/1/q/75|imageslim
 
 node_sass:
   debug: false

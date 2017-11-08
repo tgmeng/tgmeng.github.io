@@ -1,0 +1,9 @@
+extends includes/layout
+
+block content
+  article.post.post--album
+    h1
+      = page.title
+      time(class="post__time" datetime=date_xml(page.date))=' ' + date(page.date)
+    != page.content
+  include includes/pagination
