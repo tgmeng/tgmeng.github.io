@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>ZSH 启动配置文件 [ 懒构造 ]</title><link rel="stylesheet" href="/css/typo.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="stylesheet" href="/css/prettify.css"><link rel="stylesheet" href="/css/prettify/sunburst.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container typo"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/">HOME</a></li><li class="menu__item"><a href="/archives">ARCHIVES</a></li><li class="menu__item"><a href="/albums">ALBUMS</a></li></ul></nav></header><section class="main"><article class="post"><h1>ZSH 启动配置文件<time datetime="2017-11-07T08:01:48.000Z" class="post__time"> 2017-11-07</time></h1><blockquote>
+<p>文章摘取、翻译自 <a href="http://zsh.sourceforge.net/Guide/zshguide02.html" target="_blank" rel="external">A User’s Guide to the Z-Shell - Chapter 2: What to put in your startup files</a></p>
+</blockquote>
+<h2 id="Shell-的种类"><a href="#Shell-的种类" class="headerlink" title="Shell 的种类"></a>Shell 的种类</h2><p>首次，我们认识下什么是 interactive 和 login shell。</p>
+<h3 id="Interactive-Non-Interactive-shells"><a href="#Interactive-Non-Interactive-shells" class="headerlink" title="Interactive/Non-Interactive shells"></a>Interactive/Non-Interactive shells</h3><p>shell 只是获取一些命令然后执行他们，并不关心是从一个文件输入的命令，还是从命令行上手打的。<br>在提示框中输入并等待每个命令执行的 shell 是 interactive 的；从文件中读取的命令的 shell 是 non-Interactive 的。</p>
+<h3 id="Login-Non-login-shells"><a href="#Login-Non-login-shells" class="headerlink" title="Login/Non-login shells"></a>Login/Non-login shells</h3><p>当你登录一台电脑，运行的 shell 是交互式的，也是登录的。如果你输入 <code>zsh</code> ，则会启动另外一个 non-login shell。<br>如果想尝试启动一个 login shell，可输入 <code>zsh -l</code> 试试 。</p>
+<p>login shell 主要区别是在执行启动文件过程中，下面会有描述。<br>另一个区别在你退出的时候。在login shell中，你可以输入 <code>logout</code> 退出；而 non-login shell 则需要输入 <code>exit</code>。<br>然而  <code>exit</code>  在其他类型（interactive、non-interactive、login……）的 shell 上是通用的。</p>
+<p><strong>PS</strong>： <code>bye</code> 等同于 <code>exit</code>。</p>
+<p><strong>PS2</strong>：验证是否登录：</p>
+<pre><code class="zsh">if [[ -o login ]]; then
+    print yes
+else
+    print no
+fi
+
+# one-liner
+if [[ -o login ]]; then; print yes; else; print no; fi
+</code></pre>
+<h2 id="所有启动配置（startup）文件"><a href="#所有启动配置（startup）文件" class="headerlink" title="所有启动配置（startup）文件"></a>所有启动配置（startup）文件</h2><pre><code>/etc/zshenv
+    对于每个 zsh 总是执行。
+~/.zshenv
+    对于每个 zsh，通常都会执行。（下面「NO_RCS」会影响）
+/etc/zprofile
+    在 login shells 执行。
+~/.zprofile
+    在 login shells 执行。
+/etc/zshrc
+    在 interactive shells 执行。
+~/.zshrc
+    在 interactive shells 执行。
+/etc/zlogin
+    在 login shells 执行。
+~/.zlogin
+    在 login shells 执行。
+</code></pre><h3 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h3><p>输入 <code>print $ZDOTDIR</code> 确定启动文件位置。如果不是空的或者报错，启动文件位于 「$ZDOTDIR」；否则在 「~」。</p>
+<p>「~/.zprofile」和「~/.zlogin」的区别在相对于「~/.zshrc」的执行时机：一个在前，一个在后。</p>
+<p>如果设置了 「NO_RCS」选项 或者  <code>zsh -f</code>，则跳过其他文件，只会执行 「/etc/zshenv」。<br>因为「/etc/zshenv」总会执行，「the First Law of Zsh Administration」告诉我们：</p>
+<blockquote>
+<p>put as little as possible in the file /etc/zshenv, as every single zsh which starts up has to read it.</p>
+</blockquote>
+<p>总之，尽量保持 「/etc/zshenv」简洁，通常会用以下代码包裹选项设置。</p>
+<pre><code class="zsh">if [[ ! -o norcs ]]; then
+    ... &lt;commands to run if NO_RCS is not set,
+    such as setting options&gt; ...
+fi
+</code></pre>
+<h3 id="Logout"><a href="#Logout" class="headerlink" title="Logout"></a>Logout</h3><p>「~/.zlogout」和「/etc/zlogout」在最后按照顺序执行。<br>正如他们名字那样，他们是 zlogin 文件的反面，他们也只会在 login shells 中执行。</p>
+<p>如果你任何类型的 shell 执行最后对运行一个文件，可以这样：</p>
+<pre><code class="zsh"> TRAPEXIT() {
+    # commands to run here, e.g. if you
+    # always want to run .zlogout:
+    if [[ ! -o login ]]; then
+      # don&#39;t do this in a login shell
+      # because it happens anyway
+       . ~/.zlogout
+    fi
+ }
+</code></pre>
+<p>如果在 「.zshrc」中放入以上代码，所有 interactive shells 都会在最后强制执行「.zlogout」。</p></article><nav class="pagination"><span class="pagination__next"><a href="/2017/10/25/鼠须管-Squirrel-入-zhe-门-teng/">鼠须管(Squirrel) 入(zhe)门(teng)</a></span></nav></section><footer class="footer"><span class="footer__item">©2017 Mr.F**kJ</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="/js/prettify/prettify.js"></script><script src="/js/prettify/lang-css.js"></script><script src="/js/fabric.js"></script></body></html>
