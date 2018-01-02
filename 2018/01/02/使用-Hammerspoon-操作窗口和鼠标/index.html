@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>使用 Hammerspoon 操作窗口和鼠标 [ 懒构造 ]</title><link rel="stylesheet" href="/css/typo.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="stylesheet" href="/css/prettify.css"><link rel="stylesheet" href="/css/prettify/sunburst.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container typo"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/">HOME</a></li><li class="menu__item"><a href="/archives">ARCHIVES</a></li><li class="menu__item"><a href="/albums">ALBUMS</a></li></ul></nav></header><section class="main"><article class="post"><h1>使用 Hammerspoon 操作窗口和鼠标<time datetime="2018-01-02T06:22:25.000Z" class="post__time"> 2018-01-02</time></h1><h2 id="是否觉得以下问题很蛋疼？"><a href="#是否觉得以下问题很蛋疼？" class="headerlink" title="是否觉得以下问题很蛋疼？"></a>是否觉得以下问题很蛋疼？</h2><ol>
+<li>改变窗口布局、大小：触控板，拖拉拖拉拖……</li>
+<li>应用多工作区间移动：触控板拖动应用配合键盘切换空间，或者使用「Mission Control」拖动</li>
+<li>多屏幕<br> 3.1 鼠标换另一个屏幕上，拖拖拖……<br> 3.2 应用放另一个屏幕上，拖拖拖……</li>
+</ol>
+<h2 id="工具们"><a href="#工具们" class="headerlink" title="工具们"></a>工具们</h2><p>之前一直在使用 「<a href="http://www.irradiatedsoftware.com/sizeup/" target="_blank" rel="external">SizeUp</a>」  配合 「<a href="https://github.com/round/CatchMouse/" target="_blank" rel="external">CatchMouse</a>」 解决这些问题。<br>SizeUp 挺好用的，但免费版本老弹 License 有点烦。<br>CatchMouse 只能移动鼠标到屏幕中心，不能记录位置。切换窗口之后还要拖拖拖，让人凌乱。<br>后来，找到了 Hammerspoon，完美替代上面两者。</p>
+<p><strong>PS</strong>：当然，还有很多类似软件 「<a href="https://manytricks.com/moom/" target="_blank" rel="external">Moom</a>」 和 「<a href="http://mizage.com/divvy/" target="_blank" rel="external">Divvy</a>」 等等……这里就不说了。</p>
+<h2 id="Hammerspoon？"><a href="#Hammerspoon？" class="headerlink" title="Hammerspoon？"></a>Hammerspoon？</h2><p>「<a href="http://www.hammerspoon.org/" target="_blank" rel="external">Hammerspoon</a>」是 OS X 下的一个强大自动化工具。<br>可以使用「<a href="http://www.lua.org/" target="_blank" rel="external">Lua</a>」脚本语言控制系操作系统：应用、窗口、鼠标……等等……</p>
+<p><strong>下载 &amp; 安装 &amp; 配置</strong><br><a href="https://github.com/Hammerspoon/hammerspoon/releases/latest" target="_blank" rel="external">下载最新版本</a>，然后拖到 <code>/Applications</code> 下。<br>安装完后，还需要创建  <code>~/.hammerspoon/init.lua</code> 存放脚本。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p><strong>不会 Lua？</strong>不需要，参（fu zhi）考（zhan tie）别人配置，直接上手干！<br>当然，如果稍微了解下 Lua，可以看「<a href="https://learnxinyminutes.com/docs/lua/" target="_blank" rel="external">Learn X in Y minutes</a>」。<br>要了解接口干啥的或开发自己功能，官方「<a href="http://www.hammerspoon.org/docs/index.html" target="_blank" rel="external">Hammerspoon API</a>」是个好东西。</p>
+<h3 id="我的配置"><a href="#我的配置" class="headerlink" title="我的配置"></a>我的配置</h3><p>配置靠偷，东拼西凑……<br><strong><a href="https://gist.github.com/josephholsten/1e17c7418d9d8ec0e783" target="_blank" rel="external">这个模拟 SizeUp 的配置</a></strong>非常好，可以从这个配置开始修改、拓展。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>地址：<a href="https://github.com/tgmeng/dotfiles/blob/master/hammerspoon/.hammerspoon/init.lua" target="_blank" rel="external">https://github.com/tgmeng/dotfiles/blob/master/hammerspoon/.hammerspoon/init.lua</a><br>由于代码太长，就不贴出来了 :P。</p>
+<p><strong>PS：脚本变更，记得「Reload Config」！！！</strong></p>
+<h4 id="快捷键-amp-功能"><a href="#快捷键-amp-功能" class="headerlink" title="快捷键 &amp; 功能"></a>快捷键 &amp; 功能</h4><pre><code>按键：
+⌃：ctrl
+⌥：alt
+⇧：shift
+⌘：cmd
+
+窗口布局：
+⌃⌥⌘ + H：屏幕左半边，高度占满
+⌃⌥⌘ + L：屏幕右半边，高度占满
+⌃⌥⌘ + K：屏幕上半边，宽度占满
+⌃⌥⌘ + J：屏幕下半边，宽度占满
+⌃⌥⌘ + M：全屏
+⌃⌥⌘ + C：屏幕中间，宽高为屏幕一半
+⌃⌥⌘ + /：还原上次位置、大小
+
+屏幕间移动窗口：
+⌃⌥ + X：移动到下一个屏幕
+⌃⌥ + Z：移动到上一个屏幕
+
+工作空间之间移动窗口：
+⌃⌘ + X ：移动到下一个空间
+⌃⌘ + Z ：移动到上一个空间
+⌃⇧⌘ + X：移动到下一个空间，同时切换工作空间
+⌃⇧⌘ + Z：移动到上一个空间，同时切换工作空间
+
+屏幕间移动鼠标：
+⌃ + 1：移动到下一个屏幕
+⌃ + 2：移动到下一个屏幕
+
+*PS：屏幕间切换鼠标时，会记录当前鼠标位置；切换回来时复原。
+*PS2：标红鼠标位置，方便找到鼠标。
+</code></pre><h2 id="关于工作空间"><a href="#关于工作空间" class="headerlink" title="关于工作空间"></a>关于工作空间</h2><p>由于 Apple 未提供官方的 API，所以 Hammerspoon 中没有相关接口。<br>需要使用非官方工作空间接口拓展模块「<a href="https://github.com/asmagill/hs._asm.undocumented.spaces" target="_blank" rel="external">hs._asm.undocumented.spaces</a>」。</p>
+<p><strong>下载安装</strong>：</p>
+<pre><code class="shell">$ git clone https://github.com/asmagill/hs._asm.undocumented.spaces spaces
+$ cd spaces
+$ make install
+</code></pre>
+<p>其他详细说明，可以参考模块的 <a href="https://github.com/asmagill/hs._asm.undocumented.spaces/blob/master/README.md" target="_blank" rel="external">README.md</a>。</p></article><nav class="pagination"><span class="pagination__next"><a href="/2017/11/07/ZSH-启动配置文件/">ZSH 启动配置文件</a></span></nav></section><footer class="footer"><span class="footer__item">©2017 Mr.F**kJ</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="/js/prettify/prettify.js"></script><script src="/js/prettify/lang-css.js"></script><script src="/js/fabric.js"></script></body></html>
