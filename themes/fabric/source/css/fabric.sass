@@ -1,10 +1,21 @@
+@import 'bourbon'
+
+$break-large: 1200px
+
+html
+  position: absolut
+  top: 0
+  bottom: 0
+  left: 0
+  right: 0
+
 // reset code style
 .prettyprint
   padding: 1em 1.5em !important
   border: 1px solid #ddd !important
-  white-space: pre-wrap
-  word-break: break-all
-  box-sizing: border-box;
+  white-space: pre-wrap !important
+  word-break: break-all !important
+  box-sizing: border-box !important
   li
     list-style-type: decimal !important
 
@@ -14,16 +25,25 @@
   margin: 0 auto
 
 .header
+  background: #fff
   text-align: center
 
 .menu
+  margin: 1em 0 0
+  padding: 0
+  font-size: 18px
   &__item
     display: inline
-  a
+  &__link
+    border: none
     margin: 0 5px
 
 .main
-  padding: 0 1em
+  margin-top: .5em
+  padding: 1em 1.5em
+  background: #fff
+  border-bottom-left-radius: 1em
+  border-bottom-right-radius: 1em
 
 .pagination
   position: relative
@@ -35,15 +55,22 @@
   &__prev,
   &__next
     display: table-cell
+    width: 50%
     overflow: hidden
     white-space: nowrap
     text-overflow: ellipsis
   &__prev
     text-align: left
     padding-right: 1em
+    &:before
+      padding-right: .5em
+      content: '◀'
   &__next
     text-align: right
     padding-left: 1em
+    &:after
+      padding-left: .5em
+      content: '▶'
   .page-num
     display: table-cell
     position: absolute
@@ -55,9 +82,12 @@
   text-align: center
   &__current
     color: #999
+    &.is-end
+      color: #000
   &__total
 
 .footer
+  padding: 1em 0
   text-align: center
   .footer__item
     position: relative
@@ -65,7 +95,7 @@
     &:first-child:before
       width: 0
     &:before
-      $ft-border-height: 1em;
+      $ft-border-height: 1em
       position: absolute
       top: 50%
       left: 0
@@ -75,17 +105,28 @@
       background-color: #ccc
       content: ''
 
+.archive
+
+.post-list
+  &__item+&__item
+    margin-top: .5em
+
 .post-list-item
+  list-style-type: none
   &__time
     display: inline-block
-    width: 100px
+    padding-right: 1em
 
 .post
+  &__title
   &__time
+    margin-left: .5em
     font-size: .5em
-    color: #999;
+    color: #999
 
 .post--album
+  img
+    width: 100%
     
 .albums
   &__title
@@ -95,10 +136,13 @@
 
 
 .album-list
-  list-style: none !important;
+  margin: 0
+  padding: 0
+  margin-top: 1em
+  list-style: none
   text-align: center
   &__item
-    margin: 0 1em 1em !important
+    margin: 0 1em 1em
 
 .album
   display: inline-block
@@ -109,23 +153,60 @@
   box-sizing: border-box
   &:hover
     box-shadow: 4px 4px 0px #eee
-  a
+  &__title
+    +ellipsis(100%)
     border-bottom: none
 
-.image-box
-  margin: 0 !important
-  padding: 0 !important
-  list-style: none !important
+.pic-list
+  margin: 0
+  padding: 0
+  list-style: none
   text-align: center
   &__item
     display: inline-block
-    width: 100px
-    height: 100px
-    img
-      vertical-align: top
 
-.image-box--single
-  .image-box__item
-    width: 200px
-    height: 200px
+.pic-item
+  +size(100px)
+  img
+    +size(100%)
+    vertical-align: top
+  &--single
+    +size(200px)
 
+.toc
+  margin: 0
+  padding: 1em
+  padding-left: 1em
+  font-size: 14px
+
+  &-container
+    +position(fixed, 50px null 0 10px)
+    width: 220px
+    @media screen and (max-width: $break-large)
+      position: static
+      width: 100%
+  &-wrap
+    +position(absolute, 3em 0 null)
+    max-height: 80%
+    overflow: auto
+    border-top: 1px dashed #ccc
+    border-bottom: 1px dashed #ccc
+    @media screen and (max-width: $break-large)
+      position: static
+      width: 100%
+      max-height: auto
+  &-title
+    font-size: 1.5em
+  &-item
+    list-style-type: none
+  &-number
+    font-size: 12px
+  &-link
+    border: none
+  &-child
+    padding-left: 1em
+  
+.qiniu-image
+  display: block
+  margin-top: .5em
+  vertical-align: top

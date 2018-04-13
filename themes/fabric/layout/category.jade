@@ -4,7 +4,8 @@ block content
   include mixins
   div.category
     h1= page.category
-    - page.posts.each(article => {
-        +listItem(article, 'category')
-    - })
+    ul.post-list
+      - page.posts.each(article => {
+          +postItem(article, 'category').post-list__item
+      - })
   include includes/pagination

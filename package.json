@@ -2,6 +2,9 @@
   "name": "tgmeng.github.io",
   "version": "0.0.0",
   "private": true,
+  "scripts": {
+    "postinstall": "cd themes/fabric && npm install"
+  },
   "hexo": {
     "version": "3.3.9"
   },

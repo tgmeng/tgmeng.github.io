@@ -1,30 +1,29 @@
 
-- var pageTitle = page.title || config.subtitle || ''
-- if (is_archive()) pageTitle = 'Archives'
-- if (is_tag()) pageTitle = 'Tag: ' + page.tag
-- if (is_category()) pageTitle = 'Category: ' + page.category
-- if (is_month()) pageTitle += ': ' + page.month + '/' + page.year
-- if (is_year()) pageTitle += ': ' + page.year
-- pageTitle += ' [ ' + config.title + ' ]'
+- var pageTitle = (page.isCustomTitle ? __('title.' + page.title) : page.title ) || config.title || ''
+- if (is_archive()) pageTitle = __('title.archive')
+- if (is_tag()) pageTitle = __('title.tag') + page.tag
+- if (is_category()) pageTitle = __('title.category') + page.category
+- if (is_month()) pageTitle += ': ' + page.year + '-' + page.month
+- else if (is_year()) pageTitle += ': ' + page.year
 
 doctype html
-html(lang=config.language)
+html(lang=config.language, class="han-init")
   head
-    meta(charset='UTF-8')
+    meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no")
     title= pageTitle
     if theme.stylesheets !== undefined && theme.stylesheets.length > 0
       each url in theme.stylesheets
-        link(rel='stylesheet', href=url)
+        link(rel="stylesheet", href=url)
     link(rel="icon", href=config.root + 'img/favicon.png')
   body
-    .container.typo
+    .container
       header.header
         nav
           ul.menu
             each url, label in theme.menu
               li.menu__item
-                a(href=url)= __(label).toUpperCase()
+                a.menu__link(href=url)= __('menu.' + label)
 
       section.main
         if body
@@ -33,7 +32,7 @@ html(lang=config.language)
           block content
 
       footer.footer
-        span.footer__item= '©2017 ' + config.author
+        span.footer__item= '©2018 ' + config.author
         span.footer__item Powered By #[a(href='http://hexo.io' target="_blank") Hexo]
 
     if theme.scripts != undefined && theme.scripts.length > 0

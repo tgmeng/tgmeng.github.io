@@ -1,0 +1,29 @@
+title:
+  home: 首页
+  archive:  归档
+  category: 分类
+  album: 相册
+
+menu:
+  home: 首页
+  archives:  归档
+  albums: 相册
+
+archives:
+  title: 归档
+  tags: 标签
+  categories: 分类
+  time: 时间
+  none: 空
+
+format:
+  post: 'YYYY-MM-DD'
+  post_list: "YYYY-MM-DD"
+  archive_list: "YYYY-MM"
+  archive_month: "YYYY-MM"
+
+pagination:
+  prev: 上一页
+  next: 下一页
+
+toc_title: 目录

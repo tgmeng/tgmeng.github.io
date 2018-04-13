@@ -2,8 +2,8 @@ extends includes/layout
 
 block content
   article.post.post--album
-    h1
+    h1.post__title
       = page.title
-      time(class="post__time" datetime=date_xml(page.date))=' ' + date(page.date)
+      time(class="post__time" datetime=date_xml(page.date))=' ' + date(page.date, __('format.post'))
     != page.content
   include includes/pagination

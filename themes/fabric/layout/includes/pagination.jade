@@ -2,12 +2,12 @@
 nav.pagination
   if page.prev
     span.pagination__prev
-        a.prev(href=url_for(page.prev_link))!= __('prev')
+        a.prev(href=url_for(page.prev_link))!= __('pagination.prev')
   if typeof page.current === 'number' && typeof page.total === 'number'
     span.page-num
-      span.page-num__current= page.current
-      | /
+      span.page-num__current(class=page.current === page.total ? 'is-end' : '')= page.current
+      |  / 
       span.page-num__total= page.total
   if page.next
     span.pagination__next
-      a.next(href=url_for(page.next_link))!= __('next')
+      a.next(href=url_for(page.next_link))!= __('pagination.next')

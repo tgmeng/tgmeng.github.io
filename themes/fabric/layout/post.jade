@@ -2,8 +2,11 @@ extends includes/layout
 
 block content
   article.post
-    h1
+    h1.post__title
       = page.title
-      time(class="post__time" datetime=date_xml(page.date))=' ' + date(page.date)
+      time(class="post__time" datetime=date_xml(page.date))=' ' + date(page.date, __('format.post'))
+    .toc-container
+      .toc-title= __('toc_title')
+      .toc-wrap!= toc(page.content)
     != page.content
   include includes/post-pagination

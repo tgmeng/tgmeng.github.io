@@ -2,9 +2,10 @@ extends includes/layout
 
 block content
   include mixins
-  div.tag
-    h1= 'Tag: ' + page.tag
-    - page.posts.each(article => {
-        +listItem(article, 'tag')
-    - })
+  div.atag
+    h1= __('archives.tags') + ': ' + page.tag
+    ul.post-list
+      - page.posts.each(article => {
+          +postItem(article, 'tag').post-list__item
+      - })
   include includes/pagination

@@ -1,29 +1,28 @@
 
 # html lang
-language: en
+language:
+- en
+- zh-Hans
 
 # main menu navigation
 menu:
-  Home: /
-  # About: /about
-  # Contact: /contact
-  Archives: /archives
-  Albums: /albums
+  home: /
+  archives: /archives
+  albums: /albums
 
 # Miscelaneous
 favicon: /favicon.ico
 
 # stylesheets loaded in the <head>
 stylesheets:
-- /css/typo.css
+- //cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css
+- /css/vs2015.css
 - /css/fabric.css
-- /css/prettify.css
-- /css/prettify/sunburst.css
 
 # scripts loaded in the end of the body
 scripts:
-- /js/prettify/prettify.js
-- /js/prettify/lang-css.js
+- //cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js
+- /js/highlight.pack.js
 - /js/fabric.js
 
 my_qiniu_image_base: http://oxpdn0tpt.bkt.clouddn.com
@@ -35,3 +34,5 @@ node_sass:
   precision: 5
   sourceComments: false
   indentedSyntax: true
+  includePaths:
+    - ./themes/fabric/node_modules/bourbon/core

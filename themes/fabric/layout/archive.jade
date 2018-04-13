@@ -6,12 +6,12 @@ block content
 
   - var categoriesList = list_categories({ show_count: false })
   - var tagsList = list_tags({ show_count: false })
-  - var archivesList = list_archives({ show_count: false })
+  - var archivesList = list_archives({ show_count: false, format: __('format.archive_list') })
 
   div.archive
     if !is_year()
 
-      h1 Archives
+      h1= __('archives.title')
 
       if theme.atom
         p The feed is available via&nbsp;
@@ -19,25 +19,27 @@ block content
           span .
 
       aside
-        h2 Time
+        h2= __('archives.time')
         if archivesList
           != archivesList
         else
-          p #[=__('None')]
+          p #[=__('archives.none')]
 
       aside
-        h2 Tags
+        h2= __('archives.tags')
         if tagsList
           != tagsList
         else
-          p #[=__('None')]
+          p #[=__('archives.none')]
 
     else
-
-      h1= page.month + '/' + page.year
+      - var title
+      - if (is_month()) title = date(new Date(page.year + '-' + page.month), __('format.archive_month'))
+      - else if (is_year()) title = page.year
+      h1= title
 
       - page.posts.each(article => {
-          +listItem(article, 'archive')
+          +postItem(article, 'archive')
       - })
 
       include includes/pagination

@@ -3,7 +3,7 @@ extends includes/layout
 block content
   include mixins
   if page.posts.length > 0
-    .post-list
+    ul.post-list
       each post in page.posts.toArray()
-        +listItem(post, 'post')
+        +postItem(post, 'post').post-list__item
   include includes/pagination

@@ -2,12 +2,12 @@ extends includes/layout
 
 block content
   div.albums
-    h1.albums__title 「到此一游」碎片
+    h1.albums__title= page.isCustomTitle ? __('title.' + page.title) : ''
     ul.album-list
       each album in page.albums
         li.album-list__item.album
           -
-            var isSingle = album.isSingleCoverImage
+            var isSingle = album.isSingleCoverAlbum
             var end = 4
             var clazz = ''
             var size = 150
@@ -15,16 +15,16 @@ block content
             if (isSingle) {
                 end = 1
                 size = 300
-                clazz = 'image-box--single'
+                clazz = 'pic-item--single'
             }
 
             var images = album.extractedImages.slice(0, end);
 
-          ul.image-box(class=clazz)
+          ul.pic-list
             each image in images
-              li.image-box__item: a(href=`/${album.path}${image.alt ? `#${image.alt}` : ''}`)
+              li.pic-list__item.pic-item(class=clazz): a(href=`/${album.path}${image.alt ? `#${image.alt}` : ''}`)
                 img(src=`${image.url}?imageView2/5/w/${size}/h/${size}/format/jpg/interlace/1/q/75|imageslim` title=image.alt alt=image.alt)
 
-          a(href=`/${album.path}` title=album.title)= album.title
+          a.album__title(href=`/${album.path}` title=album.title)= album.title
 
   include includes/pagination

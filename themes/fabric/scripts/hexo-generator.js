@@ -2,8 +2,8 @@ hexo.extend.generator.register('albums', locals => {
     const albums = locals.pages.filter((page) => page.layout === 'post-album').sort('-date');
     return {
         path: 'albums/index.html',
-        data: { albums: albums.data, haha: true },
-        layout: [ 'albums' ]
+        data: { title: 'album', isCustomTitle: true, albums: albums.data },
+        layout: [ 'album' ]
     };
 });
 
@@ -44,7 +44,7 @@ hexo.extend.tag.register('my_qiniu_image', ([src, alt = src.replace(ptrnStripQue
     const style = config['my_qiniu_image_style'] || '';
 
     const url = `${base}/${src}` + (style ? `?${style}` : '');
-    const tpl = `img(src="${url}")&attributes(${JSON.stringify(attrs)})`;
+    const tpl = `img.qiniu-image(src="${url}")&attributes(${JSON.stringify(attrs)})`;
 
     return hexo.render.renderSync({ text: tpl, engine: 'jade' });
 });
