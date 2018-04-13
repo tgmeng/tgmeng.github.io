@@ -1,0 +1,97 @@
+<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>Promise 细节笔记</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">Promise 细节笔记<time datetime="2018-01-12T11:14:56.000Z" class="post__time"> 2018-01-12</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为啥？"><span class="toc-number">2.</span> <span class="toc-text">为啥？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义-Promise"><span class="toc-number">3.</span> <span class="toc-text">定义 Promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引入状态"><span class="toc-number">4.</span> <span class="toc-text">引入状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态"><span class="toc-number">4.1.</span> <span class="toc-text">状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链式-Promise"><span class="toc-number">5.</span> <span class="toc-text">链式 Promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链中返回-Promise"><span class="toc-number">6.</span> <span class="toc-text">链中返回 Promise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-number">7.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步"><span class="toc-number">8.</span> <span class="toc-text">异步</span></a></li></ol></div></div><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在阅读「<a href="https://tech.meituan.com/promise-insight.html" target="_blank" rel="external">剖析 Promise 之基础篇</a>」和「<a href="http://www.mattgreer.org/articles/promises-in-wicked-detail/" target="_blank" rel="external">JavaScript Promises … In Wicked Detail</a>」后，简化总结、固化下知识点，同时记录个人思考，希望能帮助其他人（包括未自己 :P）。</p>
+<p><strong>这篇笔记是跟着后者进行翻译、记录的。</strong>虽然两篇文章都是教你一步步实现一个简单的 Promise，但我感觉后者解释得更加详细、清晰。别被后者全篇英文所欺骗，高中英语+词典足以阅读通畅。</p>
+<p>这里假设你已经对 Promise 有所了解。如果不，推荐查看下 <a href="https://www.promisejs.org/" target="_blank" rel="external">www.promisejs.org</a>。</p>
+<h2 id="为啥？"><a href="#为啥？" class="headerlink" title="为啥？"></a>为啥？</h2><p>为啥要理解 Promise 细节？<br>熟悉了实现细节，可以提前避免一些坑，碰到问题也可以快速解决。<br>之前对于 Promise 错误的处理一知半解。碰到问题，总是反复百度、谷歌。现在，要回想下实现细节，便知道如何处理。</p>
+<h2 id="定义-Promise"><a href="#定义-Promise" class="headerlink" title="定义 Promise"></a>定义 Promise</h2><p>先看看 Promise 一般的用法。</p>
+<pre><code class="js">doSomething().then(function (value) {
+  console.log(value)
+})
+
+function doSomething () {
+  return new Promise(function (resolve) {
+    var value = &#39;done&#39;
+    resolve(value)
+  })
+}
+</code></pre>
+<p>根据上面，我们便能简单定义一个 Promise。</p>
+<pre><code class="js">function Promise (fn) {
+  var callback = null
+
+  this.then = function (cb) {
+    callback = cb
+  }
+
+  function resolve (value) {
+    callback(value)
+  }
+
+  fn(resolve)
+}
+</code></pre>
+<p>运行代码，发现报错了（「Bug-1」）。因为 resolve 是同步的，构造 Promise 时便执行，此时 callback = null。<br>我们可以使用 setTimeout 临时解决下。</p>
+<pre><code>function Promise (fn) {
+  var callback = null
+  this.then = function (cb) {
+    callback = cb
+  }
+
+  function resolve (value) {
+    // 强制推迟 callback 到下一个 event loop 迭程，
+    // 给 then 设置 callback 的机会。
+    setTimeout(function () {
+      callback(value)
+    }, 1)
+  }
+
+  fn(resolve)
+}
+</code></pre><p><strong>PS：下面这种情况，这里还有是有 bug 的，不过稍后解决。（「Bug-2」）</strong></p>
+<pre><code>doSomething().then().then(function (value) {
+  console.log(value)
+})
+</code></pre><h2 id="引入状态"><a href="#引入状态" class="headerlink" title="引入状态"></a>引入状态</h2><h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p>Promise 有以下状态：</p>
+<ul>
+<li>进行中（pending）: 初始状态</li>
+<li>已完成（fulfilled）: 操作成功执行</li>
+<li>已失败（rejected）: 操作失败</li>
+</ul>
+<p>「进行中」的 Promise 可以转化为附带结果的「已完成」 或者附带失败的「已失败」，一旦变化就不会再改变，保持结果。改变时，绑定的相关处理函数队列会执行。</p>
+<p>根据上面，我们需要改造下 Promise，追踪它的状态和结果。<br>简单以便，以下实现先不考虑「已失败」情况，稍后再处理。</p>
+<pre><code>function Promise (fn) {
+  var state = &#39;pending&#39;
+  var value
+  var callback = null
+
+  function resolve (newValue) {
+    value = newValue
+    state = &#39;resolved&#39;
+
+    if (callback) {
+      handle(callback)
+    }
+  }
+
+  function handle (onResolved) {
+    if (state === &#39;pending&#39;) {
+      callback = onResolved
+      return
+    }
+
+    // 这里暂时去掉了 setTimeout
+    onResolved(value)
+  }
+
+  this.then = function (onResolved) {
+    handle(onResolved)
+  }
+
+  fn(resolve)
+}
+</code></pre><p>因为状态的加入，现在我们可以随意调用 then 和 resolve 了。<br>我们从 then 和 resolve 中提取了 handle 函数，它根据不同状态进行相应处理：</p>
+<ol>
+<li>如果 resolve  先于 then，由于 resolve 后保存了状态和结果，那么直接传递结果并执行 callback 即可；</li>
+<li>如果 then 先于 resolve，此时只会注册callback，然后等待 resolve 执行；resolve 执行后，就像 1 一样，传递结果并执行 callback。</li>
+</ol>
+<p>同时，这样也解决了「Bug-1」，可以暂时去掉 setTimeout，不过稍后我们会因为一些原因重新引入。</p>
+<h2 id="链式-Promise"><a href="#链式-Promise" class="headerlink" title="链式 Promise"></a>链式 Promise</h2><h2 id="链中返回-Promise"><a href="#链中返回-Promise" class="headerlink" title="链中返回 Promise"></a>链中返回 Promise</h2><h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2></article><nav class="pagination"><span class="pagination__next"><a href="/2018/01/02/使用-Hammerspoon-操作窗口和鼠标/">使用 Hammerspoon 操作窗口和鼠标</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>
