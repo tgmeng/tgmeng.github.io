@@ -10,15 +10,6 @@ html
   right: 0
 
 // reset code style
-.prettyprint
-  padding: 1em 1.5em !important
-  border: 1px solid #ddd !important
-  white-space: pre-wrap !important
-  word-break: break-all !important
-  box-sizing: border-box !important
-  li
-    list-style-type: decimal !important
-
 .container
   width: 100%
   max-width: 760px
@@ -108,18 +99,25 @@ html
 .archive
 
 .post-list
+  margin: 0
+  padding: 0
   &__item+&__item
     margin-top: .5em
 
 .post-list-item
   list-style-type: none
   &__time
-    display: inline-block
+    float: left
+    display: block
     padding-right: 1em
+  &__title
+    display: block
+    overflow: hidden
 
 .post
   &__title
   &__time
+    display: inline-block
     margin-left: .5em
     font-size: .5em
     color: #999
@@ -154,6 +152,7 @@ html
   &:hover
     box-shadow: 4px 4px 0px #eee
   &__title
+    margin-top: .5em
     +ellipsis(100%)
     border-bottom: none
 

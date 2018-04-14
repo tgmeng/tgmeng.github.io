@@ -9,6 +9,6 @@ mixin postItem(article, type, tag)
     time(class=`${clazz}__time` datetime=date_xml(article.date))=date(article.date, __('format.post_list')) + ' '
     
     if article.link
-      a(href=url_for(article.link) target="_blank")= article.title
+      a.post-list-item__title(href=url_for(article.link) target="_blank")= article.title
     else
-      a(href=url_for(article.path))= article.title
+      a.post-list-item__title(href=url_for(article.path))= article.title
