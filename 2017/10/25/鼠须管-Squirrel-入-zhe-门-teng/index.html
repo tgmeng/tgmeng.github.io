@@ -10,19 +10,19 @@
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>开始使用Brew安装的版本，折腾中出了点问题，以为是鼠须管版本太旧，于是自己用源码编译了一个新版本。<br>目前一直用着编译的版本。</p>
 <h3 id="Brew"><a href="#Brew" class="headerlink" title="Brew"></a>Brew</h3><pre><code class="shell">brew install squirrel
 </code></pre>
-<h3 id="Manual"><a href="#Manual" class="headerlink" title="Manual"></a>Manual</h3><p>参考「<a href="https://github.com/rime/squirrel/blob/master/INSTALL.md" target="_blank" rel="external">INSTALL.md</a> 」中的步骤即可，基本畅通无阻。</p>
+<h3 id="Manual"><a href="#Manual" class="headerlink" title="Manual"></a>Manual</h3><p>参考「<a href="https://github.com/rime/squirrel/blob/master/INSTALL.md" target="_blank" rel="noopener">INSTALL.md</a> 」中的步骤即可，基本畅通无阻。</p>
 <p>期间遇到个小问题，<code>xcode-select: error: tool &#39;xcodebuild&#39; requires Xcode, but active developer directory &#39;/Library/Developer/CommandLineTools&#39; is a command line tools instance</code>。</p>
 <ol>
 <li>安装 Xcode</li>
 <li><code>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer</code>，<br><strong>或者 Xcode Beta</strong> <code>sudo xcode-select -s /Applications/Xcode-Beta.app/Contents/Developer</code></li>
 </ol>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="认识-Rime"><a href="#认识-Rime" class="headerlink" title="认识 Rime"></a>认识 Rime</h3><p>「<a href="https://github.com/rime/home/wiki" target="_blank" rel="external">wiki</a>」上有很多资料，推荐先看这篇导引「<a href="https://github.com/rime/home/wiki/UserGuide" target="_blank" rel="external">UserGuide</a>」。</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="认识-Rime"><a href="#认识-Rime" class="headerlink" title="认识 Rime"></a>认识 Rime</h3><p>「<a href="https://github.com/rime/home/wiki" target="_blank" rel="noopener">wiki</a>」上有很多资料，推荐先看这篇导引「<a href="https://github.com/rime/home/wiki/UserGuide" target="_blank" rel="noopener">UserGuide</a>」。</p>
 <p>PS：目前我也只看了 「認識 La Rime」、「下載與安裝」、「定製指南」（略读）、「輸入方案設計書」（开头）:P</p>
 <h3 id="用户资料夹"><a href="#用户资料夹" class="headerlink" title="用户资料夹"></a>用户资料夹</h3><p><strong>位置</strong>：~/Library/Rime</p>
-<p>个性化设置要自己编写yaml文件。（不清楚YAML，可看一下<a href="http://www.ruanyifeng.com/blog/2016/07/yaml.html?f=tt" target="_blank" rel="external">阮一峰的「YAML 语言教程」</a>）<br>不建议直接修改 〔全局设定〕default.yaml、〔发行版設定〕squirrel.yaml、〔预设输入方案副本〕 &lt;方案表示&gt;.schema.yaml 等。因为软件后续升级有可能会覆盖文件，导致内容丢失。</p>
+<p>个性化设置要自己编写yaml文件。（不清楚YAML，可看一下<a href="http://www.ruanyifeng.com/blog/2016/07/yaml.html?f=tt" target="_blank" rel="noopener">阮一峰的「YAML 语言教程」</a>）<br>不建议直接修改 〔全局设定〕default.yaml、〔发行版設定〕squirrel.yaml、〔预设输入方案副本〕 &lt;方案表示&gt;.schema.yaml 等。因为软件后续升级有可能会覆盖文件，导致内容丢失。</p>
 <p>应该自己新建 xxx.custom.yaml 文件实现自己配置，如 default.custom.yaml、squirrel.custom.yaml等，注意要用 utf-8（无bom）编码。</p>
-<p>详细说明可以看「<a href="https://github.com/rime/home/wiki/RimeWithSchemata#rime-中的數據文件分佈及作用" target="_blank" rel="external">Rime中的數據文件分佈及作用</a>」。</p>
-<h3 id="我的简单配置"><a href="#我的简单配置" class="headerlink" title="我的简单配置"></a>我的简单配置</h3><p>以下是我非常非常简单的配置，都来自 Rime 作者「佛振」的 <a href="https://gist.github.com/lotem" target="_blank" rel="external">gist</a>，上面有很多例子可以参考。</p>
+<p>详细说明可以看「<a href="https://github.com/rime/home/wiki/RimeWithSchemata#rime-中的數據文件分佈及作用" target="_blank" rel="noopener">Rime中的數據文件分佈及作用</a>」。</p>
+<h3 id="我的简单配置"><a href="#我的简单配置" class="headerlink" title="我的简单配置"></a>我的简单配置</h3><p>以下是我非常非常简单的配置，都来自 Rime 作者「佛振」的 <a href="https://gist.github.com/lotem" target="_blank" rel="noopener">gist</a>，上面有很多例子可以参考。</p>
 <pre><code class="yaml"># default.custom.yaml
 # 启用的 schema
 
@@ -84,13 +84,13 @@ patch:
 </code></pre>
 <p>配置编写后，「重新部署」鼠须管即可。</p>
 <h3 id="Sync"><a href="#Sync" class="headerlink" title="Sync"></a>Sync</h3><p><strong>位置</strong>：~/Library/Rime/Sync</p>
-<p>一开始不清楚这个文件夹的功能，后来发现是「同步用户数据」用的文件夹，请参考「<a href="https://github.com/rime/home/wiki/UserGuide#同步用戶資料" target="_blank" rel="external">同步用戶資料</a>」。</p>
+<p>一开始不清楚这个文件夹的功能，后来发现是「同步用户数据」用的文件夹，请参考「<a href="https://github.com/rime/home/wiki/UserGuide#同步用戶資料" target="_blank" rel="noopener">同步用戶資料</a>」。</p>
 <h2 id="折腾的问题"><a href="#折腾的问题" class="headerlink" title="折腾的问题"></a>折腾的问题</h2><h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>折腾期间，出现了一些错误导致输入法异常。<br>那么，去哪看日志呢？</p>
 <pre><code class="shell"># Rime 各种日志都放在这里
 cd $TMPDIR
 ls | grep rime
 </code></pre>
-<h3 id="【東風破】brise"><a href="#【東風破】brise" class="headerlink" title="【東風破】brise"></a>【東風破】brise</h3><p>「<a href="https://github.com/rime/brise" target="_blank" rel="external">【東風破】brise</a>」是 Rime 的 schema 仓库。<br>安装并重新部署后，发现朙月拼音打字整个乱了。<br>目前还不知道什么问题，放弃了。（因为使用自己编译后的版本 + 独立下载 schema 后，可以正常使用，便不想折腾了。</p>
+<h3 id="【東風破】brise"><a href="#【東風破】brise" class="headerlink" title="【東風破】brise"></a>【東風破】brise</h3><p>「<a href="https://github.com/rime/brise" target="_blank" rel="noopener">【東風破】brise</a>」是 Rime 的 schema 仓库。<br>安装并重新部署后，发现朙月拼音打字整个乱了。<br>目前还不知道什么问题，放弃了。（因为使用自己编译后的版本 + 独立下载 schema 后，可以正常使用，便不想折腾了。</p>
 <p><strong>PS：当时使用 Brew 安装的版本。</strong></p>
 <h3 id="方案安装不成功"><a href="#方案安装不成功" class="headerlink" title="方案安装不成功"></a>方案安装不成功</h3><p>一开始启用「地球拼音」和「注音」方案，切换到相应输入法发现没有效果？<br>查看错误日志，发现有一堆关于 prism 文件和 bin 文件的错误。貌似没有成功生成相应「棱镜」和「固态字典」。<br>于是，我删除了整个用户资料夹，重新部署。再从 GitHub 上单独下载相应输入方案放入，重新部署。<br>然后居然成功了……怀疑是原来的 xxx.schema.yaml文件有问题？</p>
 <p><strong>PS：这里使用自己编译的版本。</strong></p>
@@ -108,5 +108,5 @@ touch user.yaml
 <li>快速啓動工具 QuickSilver / Alfred 等程序裏很少需要輸入中文，於是鼠鬚管在這些程序裏默認不開啓中文輸入。</li>
 </ul>
 </blockquote>
-<p>其他资料，参考「<a href="https://github.com/rime/home/wiki/CustomizationGuide#在特定程序裏關閉中文輸入" target="_blank" rel="external">在特定程序裏關閉中文輸入</a>」.</p>
-<h3 id="NICE-的输入法"><a href="#NICE-的输入法" class="headerlink" title="NICE 的输入法"></a>NICE 的输入法</h3><p>虽然没有「搜狗拼音输入法」强大的词库，但是日常使用中已经满足需求。<br>加上简洁的界面和流畅的输入体验，简直爱不释手。<br>感谢<strong>「<a href="https://github.com/lotem" target="_blank" rel="external">佛振（lotem）</a>」</strong>带给我们如此优秀的输入法！赶紧 Star！</p></article><nav class="pagination"><span class="pagination__prev"><a href="/2017/11/07/ZSH-启动配置文件/">ZSH 启动配置文件</a></span><span class="pagination__next"><a href="/2017/05/08/WTF-CSS-Conventions-自嗨CSS规范/">WTF CSS Conventions - 自嗨CSS规范</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>
+<p>其他资料，参考「<a href="https://github.com/rime/home/wiki/CustomizationGuide#在特定程序裏關閉中文輸入" target="_blank" rel="noopener">在特定程序裏關閉中文輸入</a>」.</p>
+<h3 id="NICE-的输入法"><a href="#NICE-的输入法" class="headerlink" title="NICE 的输入法"></a>NICE 的输入法</h3><p>虽然没有「搜狗拼音输入法」强大的词库，但是日常使用中已经满足需求。<br>加上简洁的界面和流畅的输入体验，简直爱不释手。<br>感谢<strong>「<a href="https://github.com/lotem" target="_blank" rel="noopener">佛振（lotem）</a>」</strong>带给我们如此优秀的输入法！赶紧 Star！</p></article><nav class="pagination"><span class="pagination__prev"><a href="/2017/11/07/ZSH-启动配置文件/">ZSH 启动配置文件</a></span><span class="pagination__next"><a href="/2017/05/08/WTF-CSS-Conventions-自嗨CSS规范/">WTF CSS Conventions - 自嗨CSS规范</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>
