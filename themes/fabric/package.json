@@ -4,6 +4,6 @@
   "description": "fabric hexo theme",
   "private": true,
   "dependencies": {
-    "bourbon": "^5.0.0"
+    "bourbon": "^6.0.0"
   }
 }
