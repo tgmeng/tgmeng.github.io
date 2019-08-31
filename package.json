@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "server": "hexo server",
+    "dev": "hexo generate --watch",
+    "deploy": "hexo generate --deploy --force",
     "postinstall": "cd themes/fabric && npm install"
   },
   "hexo": {
