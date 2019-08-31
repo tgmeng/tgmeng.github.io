@@ -1,16 +1,14 @@
-<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>SVN 项目移植 Git</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">SVN 项目移植 Git<time datetime="2018-05-06T07:15:34.000Z" class="post__time"> 2018-05-06</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#提取人员信息"><span class="toc-number">1.</span> <span class="toc-text">提取人员信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取-SVN-记录"><span class="toc-number">2.</span> <span class="toc-text">拉取 SVN 记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支、Tag-处理"><span class="toc-number">3.</span> <span class="toc-text">分支、Tag 处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检出分支"><span class="toc-number">3.1.</span> <span class="toc-text">检出分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检出-Tag"><span class="toc-number">3.2.</span> <span class="toc-text">检出 Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#懒-style"><span class="toc-number">3.3.</span> <span class="toc-text">懒 style</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#干净的-Git-仓库"><span class="toc-number">4.</span> <span class="toc-text">干净的 Git 仓库</span></a></li></ol></div></div><p>由于公司 SVN 服务不再维护，同时我没有项目的 SVN 管理权限，需将当前项目移植至 Git 上。<br>这类需求应该很普遍，Google 之，果然发现一条靠谱的答案：<a href="https://stackoverflow.com/a/3972103。" target="_blank" rel="noopener">https://stackoverflow.com/a/3972103。</a><br><strong>这里简单翻译下这篇文，加上本人的实践操作，做些笔记备忘</strong>。</p>
+<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>SVN 项目移植 Git</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">SVN 项目移植 Git<time datetime="2018-05-06T07:15:34.000Z" class="post__time"> 2018-05-06</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#提取人员信息"><span class="toc-number">1.</span> <span class="toc-text">提取人员信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉取-SVN-记录"><span class="toc-number">2.</span> <span class="toc-text">拉取 SVN 记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支、Tag-处理"><span class="toc-number">3.</span> <span class="toc-text">分支、Tag 处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#检出分支"><span class="toc-number">3.1.</span> <span class="toc-text">检出分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检出-Tag"><span class="toc-number">3.2.</span> <span class="toc-text">检出 Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#懒-style"><span class="toc-number">3.3.</span> <span class="toc-text">懒 style</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#干净的-Git-仓库"><span class="toc-number">4.</span> <span class="toc-text">干净的 Git 仓库</span></a></li></ol></div></div><p>由于公司 SVN 服务不再维护，同时我没有项目的 SVN 管理权限，需将当前项目移植至 Git 上。<br>这类需求应该很普遍，Google 之，果然发现一条靠谱的答案：<a href="https://stackoverflow.com/a/3972103。" target="_blank" rel="noopener">https://stackoverflow.com/a/3972103。</a><br><strong>这里简单翻译下这篇文，加上本人的实践操作，做些笔记备忘</strong>。</p>
 <h2 id="提取人员信息"><a href="#提取人员信息" class="headerlink" title="提取人员信息"></a>提取人员信息</h2><pre><code class="bash">svn log -q                                                                               \
     | awk -F &#39;|&#39; &#39;/^r/ {sub(&quot;^ &quot;, &quot;&quot;, $2); sub(&quot; $&quot;, &quot;&quot;, $2); print $2&quot; = &quot;$2&quot; &lt;&quot;$2&quot;&gt;&quot;}&#39; \
-    | sort -u &gt; users.txt
-</code></pre>
+    | sort -u &gt; users.txt</code></pre>
 <h2 id="拉取-SVN-记录"><a href="#拉取-SVN-记录" class="headerlink" title="拉取 SVN 记录"></a>拉取 SVN 记录</h2><p>如果你的 SVN 仓库是标准结构（trunk/，branches/，tags/），</p>
 <pre><code class="bash">git svn clone                \
     --stdlayout              \
     --no-metadata            \
     --authors-file=users.txt \
     https://hostname/path    \
-    dest_dir-tmp/
-</code></pre>
+    dest_dir-tmp/</code></pre>
 <p>否则需要另加参数（详细请看 <code>git svn help</code>），</p>
 <pre><code class="bash">git svn clone --no-metadata  \
     --tags=tag               \
@@ -18,33 +16,27 @@
     --trunk=baseline         \
     --authors-file=users.txt \
     https://hostname/path    \
-    dest_dir-tmp/
-</code></pre>
+    dest_dir-tmp/</code></pre>
 <p><strong>PS</strong>: 如果去掉 <code>--no-metadata</code> 参数，Git 会把相应的 SVN revision 加入提交信息中。<br>（git-svn-id: svn://svn.mycompany.com/myrepo/&lt;branchname/trunk&gt;@&lt;RevisionNumber&gt; &lt;Repository UUID&gt;）</p>
 <p>拉取过程可能比较漫长，需要耐心等待……</p>
 <p>如果因为在 users.txt 中找不到相应用户而导致 SVN 停止，可以自己手动更新 users.txt，然后继续。</p>
 <pre><code class="bash"># In dest_dir-tmp
-git svn fetch
-</code></pre>
+git svn fetch</code></pre>
 <h2 id="分支、Tag-处理"><a href="#分支、Tag-处理" class="headerlink" title="分支、Tag 处理"></a>分支、Tag 处理</h2><p>完成后，Git 将 SVN <strong>「trunk」</strong>检出作为新分支，而其他分支设置为远程分支。<br>可以通过以下命令查看：</p>
-<pre><code>git branch -r
-</code></pre><h3 id="检出分支"><a href="#检出分支" class="headerlink" title="检出分支"></a>检出分支</h3><p>如果你想保存其他远程分支，你需要自己手动创建本地分支（排除 trunk/master）。<br>否则，最后一步无法 clone 到这些分支。</p>
+<pre><code>git branch -r</code></pre><h3 id="检出分支"><a href="#检出分支" class="headerlink" title="检出分支"></a>检出分支</h3><p>如果你想保存其他远程分支，你需要自己手动创建本地分支（排除 trunk/master）。<br>否则，最后一步无法 clone 到这些分支。</p>
 <pre><code class="bash">git checkout -b local_branch remote_branch
-# It&#39;s OK if local_branch and remote_branch are the same name
-</code></pre>
+# It&#39;s OK if local_branch and remote_branch are the same name</code></pre>
 <h3 id="检出-Tag"><a href="#检出-Tag" class="headerlink" title="检出 Tag"></a>检出 Tag</h3><p>Tag 被当作分支导入。你需要创建一个本地分支，打 tag 然后删除该本地分支。</p>
 <pre><code class="bash">git checkout -b tag_v1 remotes/tags/v1
 git checkout master
 git tag v1 tag_v1
-git branch -D tag_v1
-</code></pre>
+git branch -D tag_v1</code></pre>
 <h3 id="懒-style"><a href="#懒-style" class="headerlink" title="懒 style"></a>懒 style</h3><p>上面的操作一个个操作下来要爆炸，所以自己弄了点 shell 脚本。<br>执行相应脚本，只会打印相应操作。确保操作正确后，去掉脚本中的 <code>echo</code> 即可实际执行脚本。<br>另外，<strong>这里用的是 GNU 的 awk 和 sed</strong>。</p>
 <pre><code class="bash"># 检出所有远程分支，根据情况自己修改
 git branch -rvv                       \
     | awk -e &#39;{print $1}&#39;             \
     | sed -ne &#39;h;s!^origin/!!;p;g;p;&#39; \
-    | xargs -n2 echo git checkout -b
-</code></pre>
+    | xargs -n2 echo git checkout -b</code></pre>
 <pre><code class="bash"># 执行上面脚本后，才能执行此脚本
 # 给带 tag 的本地分支打标签，根据情况自己修改
 git checkout master
@@ -55,15 +47,11 @@ git branch                            \
     | xargs -n2 echo git tag
 
 # 删除 tag 分支
-git branch | grep tags | xargs git branch -D
-</code></pre>
+git branch | grep tags | xargs git branch -D</code></pre>
 <h2 id="干净的-Git-仓库"><a href="#干净的-Git-仓库" class="headerlink" title="干净的 Git 仓库"></a>干净的 Git 仓库</h2><pre><code class="bash">git clone dest_dir-tmp dest_dir
 rm -rf dest_dir-tmp
-cd dest_dir
-</code></pre>
+cd dest_dir</code></pre>
 <p>前一步创建的本地分支在这里又变为远程分支，需要再来一遍（可以参考上一步骤）：</p>
-<pre><code class="bash">git checkout -b local_branch origin/remote_branch
-</code></pre>
+<pre><code class="bash">git checkout -b local_branch origin/remote_branch</code></pre>
 <p>最后清除 remote，</p>
-<pre><code class="bash">git remote rm origin
-</code></pre></article><nav class="pagination"><span class="pagination__next"><a href="/2018/01/02/使用-Hammerspoon-操作窗口和鼠标/">使用 Hammerspoon 操作窗口和鼠标</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>
+<pre><code class="bash">git remote rm origin</code></pre></article><nav class="pagination"><span class="pagination__next"><a href="/2018/01/02/使用-Hammerspoon-操作窗口和鼠标/">使用 Hammerspoon 操作窗口和鼠标</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>

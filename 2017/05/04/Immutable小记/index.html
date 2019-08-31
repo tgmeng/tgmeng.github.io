@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>Immutable小记</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">Immutable小记<time datetime="2017-05-04T02:22:46.000Z" class="post__time"> 2017-05-04</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PureRenderMixin（React-PureComponent）"><span class="toc-number">1.1.</span> <span class="toc-text">PureRenderMixin（React.PureComponent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PureRender的问题"><span class="toc-number">1.2.</span> <span class="toc-text">PureRender的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Immutable"><span class="toc-number">2.</span> <span class="toc-text">Immutable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mutable修改："><span class="toc-number">2.1.</span> <span class="toc-text">mutable修改：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深拷贝："><span class="toc-number">2.2.</span> <span class="toc-text">深拷贝：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-assign拷贝"><span class="toc-number">2.3.</span> <span class="toc-text">Object.assign拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-assign拷贝的麻烦"><span class="toc-number">2.4.</span> <span class="toc-text">Object.assign拷贝的麻烦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immutable库"><span class="toc-number">2.5.</span> <span class="toc-text">Immutable库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-path-immutable"><span class="toc-number">3.</span> <span class="toc-text">object-path-immutable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">3.1.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number">4.</span> <span class="toc-text">参考：</span></a></li></ol></div></div><h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>React.js使用了virtual dom，通过diff修改dom，实现高效的dom更新。<br>但是有一个问题，当state更新时，如果数据没变，也会去做virtual dom的diff，这就埋下了性能隐患。</p>
+<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>Immutable小记</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">Immutable小记<time datetime="2017-05-04T02:22:46.000Z" class="post__time"> 2017-05-04</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#React"><span class="toc-number">1.</span> <span class="toc-text">React</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PureRenderMixin（React-PureComponent）"><span class="toc-number">1.1.</span> <span class="toc-text">PureRenderMixin（React.PureComponent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PureRender的问题"><span class="toc-number">1.2.</span> <span class="toc-text">PureRender的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Immutable"><span class="toc-number">2.</span> <span class="toc-text">Immutable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mutable修改："><span class="toc-number">2.1.</span> <span class="toc-text">mutable修改：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#深拷贝："><span class="toc-number">2.2.</span> <span class="toc-text">深拷贝：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-assign拷贝"><span class="toc-number">2.3.</span> <span class="toc-text">Object.assign拷贝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-assign拷贝的麻烦"><span class="toc-number">2.4.</span> <span class="toc-text">Object.assign拷贝的麻烦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Immutable库"><span class="toc-number">2.5.</span> <span class="toc-text">Immutable库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#object-path-immutable"><span class="toc-number">3.</span> <span class="toc-text">object-path-immutable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#使用"><span class="toc-number">3.1.</span> <span class="toc-text">使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number">4.</span> <span class="toc-text">参考：</span></a></li></ol></div></div><h2 id="React"><a href="#React" class="headerlink" title="React"></a>React</h2><p>React.js使用了virtual dom，通过diff修改dom，实现高效的dom更新。<br>但是有一个问题，当state更新时，如果数据没变，也会去做virtual dom的diff，这就埋下了性能隐患。</p>
 <h3 id="PureRenderMixin（React-PureComponent）"><a href="#PureRenderMixin（React-PureComponent）" class="headerlink" title="PureRenderMixin（React.PureComponent）"></a>PureRenderMixin（React.PureComponent）</h3><p>上面的问题可以通过使用 <a href="https://link.zhihu.com/?target=http%3A//facebook.github.io/react/docs/pure-render-mixin.html" target="_blank" rel="noopener">PureRenderMixin</a>（<a href="https://facebook.github.io/react/docs/react-api.html#react.purecomponent" target="_blank" rel="noopener">React.PureComponent</a>）解决。</p>
 <pre><code class="javascript">import PureRenderMixin from &#39;react-addons-pure-render-mixin&#39;;
 class FooComponent extends React.Component {
@@ -10,8 +10,7 @@ class FooComponent extends React.Component {
   render() {
     return &lt;div className={this.props.className}&gt;foo&lt;/div&gt;;
   }
-}
-</code></pre>
+}</code></pre>
 <p>该mixin实现了 <a href="https://facebook.github.io/react/docs/react-component.html#shouldcomponentupdate" target="_blank" rel="noopener">shouldComponentUpdate</a> 的细节进行优化。</p>
 <h3 id="PureRender的问题"><a href="#PureRender的问题" class="headerlink" title="PureRender的问题"></a>PureRender的问题</h3><p>它只是“浅比较”对象，如果是复杂的对象结构，那就出现了问题。<br>比如这样的结构：</p>
 <pre><code class="json">{
@@ -21,13 +20,11 @@ class FooComponent extends React.Component {
             &quot;thing&quot;: &quot;gg fly&quot;,
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>如果直接修改对象上的属性</p>
 <pre><code class="javascript">const some = this.state.some;
 some.time = +new Date();
-this.setState({ some });
-</code></pre>
+this.setState({ some });</code></pre>
 <p>则组件不会进行重新渲染</p>
 <p>由于直接修改some上的time的值，但some仍然指向同一个对象。<br>经过PureRenderMixin的优化判断，不执行重新渲染，造成“卡死”的情况。</p>
 <p>针对上面这种情况：</p>
@@ -44,8 +41,7 @@ const y = x;
 y.name = &#39;new name&#39;;
 console.log(x.name); // &#39;new name&#39;
 console.log(y.name); // &#39;new name&#39;
-console.log(x === y); // true
-</code></pre>
+console.log(x === y); // true</code></pre>
 <p>如何Immutable地修改呢？</p>
 <h3 id="深拷贝："><a href="#深拷贝：" class="headerlink" title="深拷贝："></a>深拷贝：</h3><pre><code class="javascript">const x = {
     name: &#39;old name&#39;
@@ -55,8 +51,7 @@ const y = JSON.parse(JSON.stringify(x));
 y.name = &#39;new name&#39;;
 console.log(x.name); // &#39;old name&#39;
 console.log(y.name); // &#39;new name&#39;
-console.log(x === y); // false
-</code></pre>
+console.log(x === y); // false</code></pre>
 <p>深拷贝效率特别低，强烈不推荐。</p>
 <h3 id="Object-assign拷贝"><a href="#Object-assign拷贝" class="headerlink" title="Object.assign拷贝"></a>Object.assign拷贝</h3><p>按照修改路径，使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign</a> 拷贝对象，构造新对象。</p>
 <pre><code class="javascript">const x = {
@@ -67,8 +62,7 @@ const y = Object.assign({}, x);
 y.name = &#39;new name&#39;;
 console.log(x.name); // &#39;old name&#39;
 console.log(y.name); // &#39;new name&#39;
-console.log(x === y); // false
-</code></pre>
+console.log(x === y); // false</code></pre>
 <p>这样就简单解决了问题，而且效率也比较高。</p>
 <p>数组可以使用 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice" target="_blank" rel="noopener">Array.prototype.slice</a> 进行拷贝。</p>
 <h3 id="Object-assign拷贝的麻烦"><a href="#Object-assign拷贝的麻烦" class="headerlink" title="Object.assign拷贝的麻烦"></a>Object.assign拷贝的麻烦</h3><p>如果对象再“深”一些：</p>
@@ -82,8 +76,7 @@ console.log(x === y); // false
             &quot;thing&quot;: &quot;gg fly&quot;,
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>那我们可能要一遍遍拷贝对象：</p>
 <pre><code class="javascript">const some = this.state.some;
 const neoSome = Object.assign({}, some, {
@@ -91,8 +84,7 @@ const neoSome = Object.assign({}, some, {
         &quot;good&quot;: +new Date()
     })
 });
-this.setState({ some: neoSome });
-</code></pre>
+this.setState({ some: neoSome });</code></pre>
 <p>为了简化操作 或 加强相关功能，我们可以使用不可变相关的库。</p>
 <h3 id="Immutable库"><a href="#Immutable库" class="headerlink" title="Immutable库"></a>Immutable库</h3><p>Facebook出品的 <a href="http://facebook.github.io/immutable-js/" target="_blank" rel="noopener">Immutable.js</a>，比较复杂、重，真.重型解药<br><a href="https://facebook.github.io/react/docs/update.html" target="_blank" rel="noopener">Immutability Helpers</a>，提供了方便编写的语法糖<br><a href="https://github.com/mariocasciaro/object-path-immutable" target="_blank" rel="noopener">object-path-immutable</a>，简单、轻便。</p>
 <p>项目中我们使用的是 object-path-immutable 配合 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice" target="_blank" rel="noopener">Array.prototype.slice</a> &amp; <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank" rel="noopener">Object.assign</a></p>
@@ -119,8 +111,7 @@ var newObj = immutable.set(obj, &#39;a.b&#39;, &#39;f&#39;);
 //obj.b !== newObj.b
 
 //However:
-//obj.c === newObj.c
-</code></pre>
+//obj.c === newObj.c</code></pre>
 <p>链式操作：</p>
 <pre><code class="javascript">//Chaining mode. value() at the end of the chain is used to retrieve the resulting object
 var newObj = immutable(obj).set(&#39;a.b&#39;, &#39;f&#39;).del(&#39;a.c.0&#39;).value();
@@ -138,8 +129,7 @@ neoState.del(&#39;a.c.0&#39;);
 neoState = neoState.set(&#39;a.b&#39;, &#39;f&#39;);
 neoState = neoState.del(&#39;a.c.0&#39;);
 
-var newObj = neoState.value();
-</code></pre>
+var newObj = neoState.value();</code></pre>
 <p>其他API，可查看文档按情况使用。</p>
 <h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
 <li><a href="https://www.zhihu.com/question/28016223/answer/50292748" target="_blank" rel="noopener">facebook immutable.js 意义何在，使用场景？</a></li>

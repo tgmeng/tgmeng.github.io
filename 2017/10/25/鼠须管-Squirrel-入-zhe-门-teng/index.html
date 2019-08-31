@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>鼠须管(Squirrel) 入(zhe)门(teng)</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">鼠须管(Squirrel) 入(zhe)门(teng)<time datetime="2017-10-25T08:30:00.000Z" class="post__time"> 2017-10-25</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#头"><span class="toc-number">1.</span> <span class="toc-text">头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中州韵输入法引擎（Rime）和-鼠须管（Squirrel）"><span class="toc-number">2.</span> <span class="toc-text">中州韵输入法引擎（Rime）和 鼠须管（Squirrel）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Brew"><span class="toc-number">3.1.</span> <span class="toc-text">Brew</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Manual"><span class="toc-number">3.2.</span> <span class="toc-text">Manual</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">4.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#认识-Rime"><span class="toc-number">4.1.</span> <span class="toc-text">认识 Rime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户资料夹"><span class="toc-number">4.2.</span> <span class="toc-text">用户资料夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我的简单配置"><span class="toc-number">4.3.</span> <span class="toc-text">我的简单配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sync"><span class="toc-number">4.4.</span> <span class="toc-text">Sync</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#折腾的问题"><span class="toc-number">5.</span> <span class="toc-text">折腾的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#日志"><span class="toc-number">5.1.</span> <span class="toc-text">日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【東風破】brise"><span class="toc-number">5.2.</span> <span class="toc-text">【東風破】brise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案安装不成功"><span class="toc-number">5.3.</span> <span class="toc-text">方案安装不成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-yaml"><span class="toc-number">5.4.</span> <span class="toc-text">user.yaml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾"><span class="toc-number">6.</span> <span class="toc-text">尾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态问题，解决！"><span class="toc-number">6.1.</span> <span class="toc-text">状态问题，解决！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NICE-的输入法"><span class="toc-number">6.2.</span> <span class="toc-text">NICE 的输入法</span></a></li></ol></li></ol></div></div><h2 id="头"><a href="#头" class="headerlink" title="头"></a>头</h2><p>之前一直在使用「搜狗输入法」，依靠她强大的词库，日常用拼音打字挺方便、流畅的。<br>但是，作为一个「MacVim」使用者，经常会在中文、英文输入中迷失自我。</p>
+<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>鼠须管(Squirrel) 入(zhe)门(teng)</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">鼠须管(Squirrel) 入(zhe)门(teng)<time datetime="2017-10-25T08:30:00.000Z" class="post__time"> 2017-10-25</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#头"><span class="toc-number">1.</span> <span class="toc-text">头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#中州韵输入法引擎（Rime）和-鼠须管（Squirrel）"><span class="toc-number">2.</span> <span class="toc-text">中州韵输入法引擎（Rime）和 鼠须管（Squirrel）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.</span> <span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Brew"><span class="toc-number">3.1.</span> <span class="toc-text">Brew</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Manual"><span class="toc-number">3.2.</span> <span class="toc-text">Manual</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-number">4.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#认识-Rime"><span class="toc-number">4.1.</span> <span class="toc-text">认识 Rime</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户资料夹"><span class="toc-number">4.2.</span> <span class="toc-text">用户资料夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#我的简单配置"><span class="toc-number">4.3.</span> <span class="toc-text">我的简单配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sync"><span class="toc-number">4.4.</span> <span class="toc-text">Sync</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#折腾的问题"><span class="toc-number">5.</span> <span class="toc-text">折腾的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#日志"><span class="toc-number">5.1.</span> <span class="toc-text">日志</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#【東風破】brise"><span class="toc-number">5.2.</span> <span class="toc-text">【東風破】brise</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#方案安装不成功"><span class="toc-number">5.3.</span> <span class="toc-text">方案安装不成功</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#user-yaml"><span class="toc-number">5.4.</span> <span class="toc-text">user.yaml</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尾"><span class="toc-number">6.</span> <span class="toc-text">尾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态问题，解决！"><span class="toc-number">6.1.</span> <span class="toc-text">状态问题，解决！</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NICE-的输入法"><span class="toc-number">6.2.</span> <span class="toc-text">NICE 的输入法</span></a></li></ol></li></ol></div></div><h2 id="头"><a href="#头" class="headerlink" title="头"></a>头</h2><p>之前一直在使用「搜狗输入法」，依靠她强大的词库，日常用拼音打字挺方便、流畅的。<br>但是，作为一个「MacVim」使用者，经常会在中文、英文输入中迷失自我。</p>
 <p><strong>栗子</strong>：</p>
 <ol>
 <li>在「Normal 模式」时，经常出现你以为是英文输入却是中文输入的情况。然后输入了一大堆动作想操作文本，结果变成了搜狗拼音输入界面。</li>
@@ -8,14 +8,14 @@
 <p>这里记录下折腾过程和碰到的问题，方便日后回首。</p>
 <h2 id="中州韵输入法引擎（Rime）和-鼠须管（Squirrel）"><a href="#中州韵输入法引擎（Rime）和-鼠须管（Squirrel）" class="headerlink" title="中州韵输入法引擎（Rime）和 鼠须管（Squirrel）"></a>中州韵输入法引擎（Rime）和 鼠须管（Squirrel）</h2><p>开始以为他们是两个输入法，鼠须管修改自Rime这样的关系。<br>看了资料，原来 Rime 是输入法引擎，鼠须管是 Mac OS 客户端。</p>
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>开始使用Brew安装的版本，折腾中出了点问题，以为是鼠须管版本太旧，于是自己用源码编译了一个新版本。<br>目前一直用着编译的版本。</p>
-<h3 id="Brew"><a href="#Brew" class="headerlink" title="Brew"></a>Brew</h3><pre><code class="shell">brew install squirrel
-</code></pre>
+<h3 id="Brew"><a href="#Brew" class="headerlink" title="Brew"></a>Brew</h3><pre><code class="shell">brew install squirrel</code></pre>
 <h3 id="Manual"><a href="#Manual" class="headerlink" title="Manual"></a>Manual</h3><p>参考「<a href="https://github.com/rime/squirrel/blob/master/INSTALL.md" target="_blank" rel="noopener">INSTALL.md</a> 」中的步骤即可，基本畅通无阻。</p>
 <p>期间遇到个小问题，<code>xcode-select: error: tool &#39;xcodebuild&#39; requires Xcode, but active developer directory &#39;/Library/Developer/CommandLineTools&#39; is a command line tools instance</code>。</p>
 <ol>
 <li>安装 Xcode</li>
-<li><code>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer</code>，<br><strong>或者 Xcode Beta</strong> <code>sudo xcode-select -s /Applications/Xcode-Beta.app/Contents/Developer</code></li>
+<li><code>sudo xcode-select -s /Applications/Xcode.app/Contents/Developer</code>， </li>
 </ol>
+<p><strong>或者 Xcode Beta</strong> <code>sudo xcode-select -s /Applications/Xcode-Beta.app/Contents/Developer</code></p>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="认识-Rime"><a href="#认识-Rime" class="headerlink" title="认识 Rime"></a>认识 Rime</h3><p>「<a href="https://github.com/rime/home/wiki" target="_blank" rel="noopener">wiki</a>」上有很多资料，推荐先看这篇导引「<a href="https://github.com/rime/home/wiki/UserGuide" target="_blank" rel="noopener">UserGuide</a>」。</p>
 <p>PS：目前我也只看了 「認識 La Rime」、「下載與安裝」、「定製指南」（略读）、「輸入方案設計書」（开头）:P</p>
 <h3 id="用户资料夹"><a href="#用户资料夹" class="headerlink" title="用户资料夹"></a>用户资料夹</h3><p><strong>位置</strong>：~/Library/Rime</p>
@@ -34,8 +34,7 @@ patch:
     - schema: emoji                # emoji表情
     - schema: terra_pinyin         # 地球拼音 dì qiú pīn yīn
     - schema: bopomofo             # 注音
-    - schema: bopomofo_tw          # 注音 臺灣正體模式
-</code></pre>
+    - schema: bopomofo_tw          # 注音 臺灣正體模式</code></pre>
 <pre><code class="yaml"># luna_pinyin_simp.custom.yaml
 # 朙月拼音 简化字模式添加 Emoji 表情支持
 # 输入“`”然后即可进行Emoji输入
@@ -55,8 +54,7 @@ patch:
     dictionary: emoji
     enable_completion: false
     prefix: &quot;`&quot;
-    tips: 〔表情〕
-</code></pre>
+    tips: 〔表情〕</code></pre>
 <pre><code class="yaml"># squirrel.custom.yaml
 # 鼠须管界面配置
 
@@ -80,24 +78,21 @@ patch:
 #   孤寺 - lost_temple
 #   暗堂 - dark_temple
 #   星際我爭霸 - starcraft
-#   谷歌 - google
-</code></pre>
+#   谷歌 - google</code></pre>
 <p>配置编写后，「重新部署」鼠须管即可。</p>
 <h3 id="Sync"><a href="#Sync" class="headerlink" title="Sync"></a>Sync</h3><p><strong>位置</strong>：~/Library/Rime/Sync</p>
 <p>一开始不清楚这个文件夹的功能，后来发现是「同步用户数据」用的文件夹，请参考「<a href="https://github.com/rime/home/wiki/UserGuide#同步用戶資料" target="_blank" rel="noopener">同步用戶資料</a>」。</p>
 <h2 id="折腾的问题"><a href="#折腾的问题" class="headerlink" title="折腾的问题"></a>折腾的问题</h2><h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>折腾期间，出现了一些错误导致输入法异常。<br>那么，去哪看日志呢？</p>
 <pre><code class="shell"># Rime 各种日志都放在这里
 cd $TMPDIR
-ls | grep rime
-</code></pre>
+ls | grep rime</code></pre>
 <h3 id="【東風破】brise"><a href="#【東風破】brise" class="headerlink" title="【東風破】brise"></a>【東風破】brise</h3><p>「<a href="https://github.com/rime/brise" target="_blank" rel="noopener">【東風破】brise</a>」是 Rime 的 schema 仓库。<br>安装并重新部署后，发现朙月拼音打字整个乱了。<br>目前还不知道什么问题，放弃了。（因为使用自己编译后的版本 + 独立下载 schema 后，可以正常使用，便不想折腾了。</p>
 <p><strong>PS：当时使用 Brew 安装的版本。</strong></p>
 <h3 id="方案安装不成功"><a href="#方案安装不成功" class="headerlink" title="方案安装不成功"></a>方案安装不成功</h3><p>一开始启用「地球拼音」和「注音」方案，切换到相应输入法发现没有效果？<br>查看错误日志，发现有一堆关于 prism 文件和 bin 文件的错误。貌似没有成功生成相应「棱镜」和「固态字典」。<br>于是，我删除了整个用户资料夹，重新部署。再从 GitHub 上单独下载相应输入方案放入，重新部署。<br>然后居然成功了……怀疑是原来的 xxx.schema.yaml文件有问题？</p>
 <p><strong>PS：这里使用自己编译的版本。</strong></p>
 <h3 id="user-yaml"><a href="#user-yaml" class="headerlink" title="user.yaml"></a>user.yaml</h3><p>删除后貌似不会默认生成？导致无法保存输入状态，同时错误日志出现一堆很多相关错误。<br>用户资料夹，新建一个空白user.yaml，重新部署下。</p>
 <pre><code class="shell">cd ~/Library/Rime
-touch user.yaml
-</code></pre>
+touch user.yaml</code></pre>
 <h2 id="尾"><a href="#尾" class="headerlink" title="尾"></a>尾</h2><h3 id="状态问题，解决！"><a href="#状态问题，解决！" class="headerlink" title="状态问题，解决！"></a>状态问题，解决！</h3><p>默认地，在MacVim中切换回「Normal」模式，鼠须管会自动进入英文输入模式。<br>太爽啦！！再也不用头疼输入模式的问题了，安心“耕田”。  </p>
 <p>同时，</p>
 <blockquote>

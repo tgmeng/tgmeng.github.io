@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>ZSH 启动配置文件</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">ZSH 启动配置文件<time datetime="2017-11-07T08:01:48.000Z" class="post__time"> 2017-11-07</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-的种类"><span class="toc-number">1.</span> <span class="toc-text">Shell 的种类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interactive-Non-Interactive-shells"><span class="toc-number">1.1.</span> <span class="toc-text">Interactive/Non-Interactive shells</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Login-Non-login-shells"><span class="toc-number">1.2.</span> <span class="toc-text">Login/Non-login shells</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#所有启动配置（startup）文件"><span class="toc-number">2.</span> <span class="toc-text">所有启动配置（startup）文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件位置"><span class="toc-number">2.1.</span> <span class="toc-text">文件位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logout"><span class="toc-number">2.2.</span> <span class="toc-text">Logout</span></a></li></ol></li></ol></div></div><blockquote>
+<!DOCTYPE html><html lang="zh-Hans" class="han-init"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>ZSH 启动配置文件</title><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.css"><link rel="stylesheet" href="/css/vs2015.css"><link rel="stylesheet" href="/css/fabric.css"><link rel="icon" href="/img/favicon.png"></head><body><div class="container"><header class="header"><nav><ul class="menu"><li class="menu__item"><a href="/" class="menu__link">首页</a></li><li class="menu__item"><a href="/archives" class="menu__link">归档</a></li><li class="menu__item"><a href="/albums" class="menu__link">相册</a></li></ul></nav></header><section class="main"><article class="post"><h1 class="post__title">ZSH 启动配置文件<time datetime="2017-11-07T08:01:48.000Z" class="post__time"> 2017-11-07</time></h1><div class="toc-container"><div class="toc-title">目录</div><div class="toc-wrap"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Shell-的种类"><span class="toc-number">1.</span> <span class="toc-text">Shell 的种类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Interactive-Non-Interactive-shells"><span class="toc-number">1.1.</span> <span class="toc-text">Interactive/Non-Interactive shells</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Login-Non-login-shells"><span class="toc-number">1.2.</span> <span class="toc-text">Login/Non-login shells</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#所有启动配置（startup）文件"><span class="toc-number">2.</span> <span class="toc-text">所有启动配置（startup）文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件位置"><span class="toc-number">2.1.</span> <span class="toc-text">文件位置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Logout"><span class="toc-number">2.2.</span> <span class="toc-text">Logout</span></a></li></ol></li></ol></div></div><blockquote>
 <p>文章摘取、翻译自 <a href="http://zsh.sourceforge.net/Guide/zshguide02.html" target="_blank" rel="noopener">A User’s Guide to the Z-Shell - Chapter 2: What to put in your startup files</a></p>
 </blockquote>
 <h2 id="Shell-的种类"><a href="#Shell-的种类" class="headerlink" title="Shell 的种类"></a>Shell 的种类</h2><p>首次，我们认识下什么是 interactive 和 login shell。</p>
@@ -14,8 +14,7 @@ else
 fi
 
 # one-liner
-if [[ -o login ]]; then; print yes; else; print no; fi
-</code></pre>
+if [[ -o login ]]; then; print yes; else; print no; fi</code></pre>
 <h2 id="所有启动配置（startup）文件"><a href="#所有启动配置（startup）文件" class="headerlink" title="所有启动配置（startup）文件"></a>所有启动配置（startup）文件</h2><pre><code>/etc/zshenv
     对于每个 zsh 总是执行。
 ~/.zshenv
@@ -31,9 +30,8 @@ if [[ -o login ]]; then; print yes; else; print no; fi
 /etc/zlogin
     在 login shells 执行。
 ~/.zlogin
-    在 login shells 执行。
-</code></pre><h3 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h3><p>输入 <code>print $ZDOTDIR</code> 确定启动文件位置。如果不是空的或者报错，启动文件位于 「$ZDOTDIR」；否则在 「~」。</p>
-<p>「~/.zprofile」和「~/.zlogin」的区别在相对于「~/.zshrc」的执行时机：一个在前，一个在后。</p>
+    在 login shells 执行。</code></pre><h3 id="文件位置"><a href="#文件位置" class="headerlink" title="文件位置"></a>文件位置</h3><p>输入 <code>print $ZDOTDIR</code> 确定启动文件位置。如果不是空的或者报错，启动文件位于 「$ZDOTDIR」；否则在 「~」。</p>
+<p>「<del>/.zprofile」和「</del>/.zlogin」的区别在相对于「~/.zshrc」的执行时机：一个在前，一个在后。</p>
 <p>如果设置了 「NO_RCS」选项 或者  <code>zsh -f</code>，则跳过其他文件，只会执行 「/etc/zshenv」。<br>因为「/etc/zshenv」总会执行，「the First Law of Zsh Administration」告诉我们：</p>
 <blockquote>
 <p>put as little as possible in the file /etc/zshenv, as every single zsh which starts up has to read it.</p>
@@ -43,7 +41,6 @@ if [[ -o login ]]; then; print yes; else; print no; fi
     ... &lt;commands to run if NO_RCS is not set,
     such as setting options&gt; ...
 fi
-
 </code></pre>
 <h3 id="Logout"><a href="#Logout" class="headerlink" title="Logout"></a>Logout</h3><p>「~/.zlogout」和「/etc/zlogout」在最后按照顺序执行。<br>正如他们名字那样，他们是 zlogin 文件的反面，他们也只会在 login shells 中执行。</p>
 <p>如果你任何类型的 shell 执行最后对运行一个文件，可以这样：</p>
@@ -55,6 +52,5 @@ fi
       # because it happens anyway
        . ~/.zlogout
     fi
- }
-</code></pre>
+ }</code></pre>
 <p>如果在 「.zshrc」中放入以上代码，所有 interactive shells 都会在最后强制执行「.zlogout」。</p></article><nav class="pagination"><span class="pagination__prev"><a href="/2018/01/02/使用-Hammerspoon-操作窗口和鼠标/">使用 Hammerspoon 操作窗口和鼠标</a></span><span class="pagination__next"><a href="/2017/10/25/鼠须管-Squirrel-入-zhe-门-teng/">鼠须管(Squirrel) 入(zhe)门(teng)</a></span></nav></section><footer class="footer"><span class="footer__item">©2018 LazyFabric</span><span class="footer__item">Powered By <a href="http://hexo.io" target="_blank">Hexo</a></span></footer></div><script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.3.0/han.min.js"></script><script src="/js/highlight.pack.js"></script><script src="/js/fabric.js"></script></body></html>
